@@ -19,6 +19,7 @@ model Clients{
   cnpj String @unique
   cpf String @unique 
   serviceBudget ServiceBudget[]
+  registerService RegisterService[]
 }
 
 model Services{
@@ -26,9 +27,10 @@ model Services{
   service String
   description String
   serviceBudget ServiceBudget[]
+  registerService RegisterService[]
 }
 
-model RegiterService{
+model RegisterService{
   id String @id @default(cuid())
   date String
   registrationDate String
@@ -37,6 +39,11 @@ model RegiterService{
   descriptionOne String
   descriptionTwo String
   status String @default("Aguardando aprovaçao")
+
+  clientID String
+  client Clients @relation(fields: [clientID], references: [id])
+  serviceID String
+  service Services @relation(fields: [serviceID], references: [id])
 }
 
 model ServiceBudget{

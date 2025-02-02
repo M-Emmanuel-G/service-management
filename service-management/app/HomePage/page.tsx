@@ -1,26 +1,41 @@
 import { db } from "@/lib/prisma";
 import Header from "../components/Header/header";
 import LastServiceCard from "../components/LastServices/lastService";
+import { Clients } from "@prisma/client";
 
 const HomePage = async () => {
 
-  const getAllServices = await db.serviceBudget.findMany({
+  interface GetAllServicesProps{
+    id: string 
+    date: string
+    registrationDate: string
+    startDate: string
+    deliveryDate: string
+    descriptionOne: string
+    descriptionTwo: string
+    status: string
+    client: Clients | null
+  }
+
+  const getAllServices = await db.registerService.findMany({
     include:{
       client:true,
-      service:true
     }
     
   })
 
-  const showServices = getAllServices.map((service:any, key:number)=>{
-    console.log(service);
+  const showServices = getAllServices.map((service:GetAllServicesProps, key:number)=>{
     
     return (
       <LastServiceCard
+        status={service.status}
         id={service.id}
         key={service.id }
-        client={service.client.nameClient}
-        description={service.description}
+        description={service.descriptionOne}
+        startDate={service.startDate}
+        client={service.client}
+        deliveryDate={service.deliveryDate}
+        registrationDate={service.registrationDate}
       />
     )
   })

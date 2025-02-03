@@ -3,6 +3,7 @@ import Header from "../components/Header/header";
 import { Clients, Services } from "@prisma/client";
 import InputSaveServices from "../components/FormInputSaveServices/input";
 import InputSaveClients from "../components/FormInputSaveClients/input";
+import ServicesSave from "./components/saveServices";
 
 const SaveServices = async () => {
 
@@ -28,7 +29,7 @@ const SaveServices = async () => {
     })
 
     return ( 
-        <main className="w-screen h-screen flex flex-col items-center justify-center">
+        <main className="w-screen h-screen flex flex-col items-center justify-center relative">
             <Header/>
             <section className="w-full h-[90%] flex flex-col items-center justify-center">
                 <form>

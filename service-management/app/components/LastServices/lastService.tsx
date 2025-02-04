@@ -6,14 +6,14 @@ import {
     CardTitle,
   } from "@/components/ui/card"
 import GetInfoServices from "../GetInfoServices/getInfoServices";
-import { Clients } from "@prisma/client";
+import { Clients, Status } from "@prisma/client";
 import UpdateStatus from "@/app/SaveServices/components/upateStatus";
 
   
 interface ServiceCardProps{
     client:Clients| null
     description:string
-    status:string
+    status:Status
     id:string
     startDate:string
     deliveryDate: string
@@ -31,6 +31,7 @@ const LastServiceCard = (params:ServiceCardProps) => {
             <CardContent className="w-1/6 h-10 flex justify-end ">
                 <UpdateStatus
                     id={params.id}
+                    status={params.status}
                 />
                 <GetInfoServices
                     client={params.client}

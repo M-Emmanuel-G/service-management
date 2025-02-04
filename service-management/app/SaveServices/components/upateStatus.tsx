@@ -13,23 +13,29 @@ import {
 import { Status } from "@prisma/client";
 import { Pencil } from "lucide-react";
 import UpdateServiceDatabase from "../Actions/updateStatusDatabase";
-import { useState } from "react";
   
 interface UpdateStatusProps{
     id:string
+    status:Status
 }
 
 const UpdateStatus = (params:UpdateStatusProps) => {
 
-    const [ status, setStatus] = useState<Status>(Status.Aguardando)
 
     const updateStatusDatabase = async()=>{
         try {
-            const result = await UpdateServiceDatabase({status, id:params.id})
+            const result = await UpdateServiceDatabase({status:params.status, id:params.id})
             alert(result)
         } catch (error:any) {
             alert(error.message)
         }
+    }
+
+    const verifyStatus =()=>{
+        if(params.status === Status.Aguardando) return "Aguardando aprovação do cliente!"
+        if(params.status === Status.Aprovado) return "Cliente aprovou o orcamento!"
+        if(params.status === Status.Orcamento) return "Cliente aguardando envio do orçamento"
+        if(params.status === Status.Finalizado) return "Serviço foi entregue!"
     }
 
     return ( 
@@ -40,12 +46,15 @@ const UpdateStatus = (params:UpdateStatusProps) => {
             <AlertDialogContent>
                 <AlertDialogHeader>
                 <AlertDialogTitle>Atualizar o Status</AlertDialogTitle>
-                    <select >
-                        <option onClick={()=>{setStatus(Status.Aguardando)}}>{Status.Aguardando}</option>
-                        <option onClick={()=>{setStatus(Status.Aprovado)}}>{Status.Aprovado}</option>
-                        <option onClick={()=>{setStatus(Status.Finalizado)}}>{Status.Finalizado}</option>
-                        <option onClick={()=>{setStatus(Status.Orcamento)}}>{Status.Orcamento}</option>
-                    </select>
+                    <section className="bg-[#656565] text-white w-full rounded-xl">
+                        <div className="my-4 ">
+                            <strong>Status atual: </strong>
+                            <span>{params.status}</span>
+                        </div>
+                        <div className="my-4 ">
+                            <span>{verifyStatus()}</span>
+                        </div>
+                    </section>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                 <AlertDialogCancel>Cancelar</AlertDialogCancel>

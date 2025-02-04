@@ -26,7 +26,7 @@ const HomePage = async () => {
       return client
   })
 
-  const showAllServices = getServices.map((service:Services)=>{
+  const showAllServices = getServices.map((service:Services)=>{ 
       return service
   })
   
@@ -59,7 +59,7 @@ const HomePage = async () => {
         <Header/>
         <section className="w-full h-[90%] flex items-center justify-center">
           <section className="w-full h-full flex flex-col px-4 overflow-y-auto">
-            {showServices}
+            {showServices} 
           </section>
         </section>
         <ServicesSave

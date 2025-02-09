@@ -48,5 +48,7 @@ enum Status{
   Orcamento
   Aguardando
   Aprovado
+  Iniciado
   Finalizado
+  Atrasado
 }

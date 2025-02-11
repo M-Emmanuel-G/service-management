@@ -1,3 +1,5 @@
+"use client"
+
 import {
     Card,
     CardContent,
@@ -8,6 +10,8 @@ import {
 import GetInfoServices from "../GetInfoServices/getInfoServices";
 import { Clients, Status } from "@prisma/client";
 import UpdateStatus from "@/app/SaveServices/components/upateStatus";
+import { useEffect } from "react";
+import { GenerateDate } from "@/app/Services/GenerateDate";
 
   
 interface ServiceCardProps{
@@ -21,6 +25,7 @@ interface ServiceCardProps{
 }
 
 const LastServiceCard = (params:ServiceCardProps) => {
+
     return ( 
         <Card className=" w-full bg-stone-300 flex justify-between items-center my-4">
             <CardHeader className="w-5/6">

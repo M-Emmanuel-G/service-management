@@ -21,6 +21,21 @@ interface UpdateStatusProps{
 
 const UpdateStatus = (params:UpdateStatusProps) => {
 
+    const verifyStatus =()=>{
+        if(params.status === Status.Aguardando) return "Aguardando aprovação do cliente!"
+        if(params.status === Status.Atrasado) return "O serviço está em atraso!"
+        if(params.status === Status.Iniciado) return "O serviço está em andamento!"
+        if(params.status === Status.Aprovado) return "Cliente aprovou o orcamento!"
+        if(params.status === Status.Orcamento) return "Cliente aguardando envio do orçamento"
+        if(params.status === Status.Finalizado) return "Serviço foi entregue!"
+    }
+
+    const confirmStatus = ()=>{
+        if(params.status === Status.Orcamento) return Status.Aguardando
+        if(params.status === Status.Aguardando) return Status.Aprovado
+        if(params.status === Status.Aprovado) return Status.Iniciado
+        if(params.status === Status.Iniciado) return Status.Finalizado
+    }
 
     const updateStatusDatabase = async()=>{
         try {
@@ -31,12 +46,6 @@ const UpdateStatus = (params:UpdateStatusProps) => {
         }
     }
 
-    const verifyStatus =()=>{
-        if(params.status === Status.Aguardando) return "Aguardando aprovação do cliente!"
-        if(params.status === Status.Aprovado) return "Cliente aprovou o orcamento!"
-        if(params.status === Status.Orcamento) return "Cliente aguardando envio do orçamento"
-        if(params.status === Status.Finalizado) return "Serviço foi entregue!"
-    }
 
     return ( 
         <AlertDialog>
@@ -53,6 +62,10 @@ const UpdateStatus = (params:UpdateStatusProps) => {
                         </div>
                         <div className="my-4 ">
                             <span>{verifyStatus()}</span>
+                        </div>
+                        <div className="my-4 ">
+                            <strong>Atualizar para: </strong>
+                            <span>{confirmStatus()}</span>
                         </div>
                     </section>
                 </AlertDialogHeader>

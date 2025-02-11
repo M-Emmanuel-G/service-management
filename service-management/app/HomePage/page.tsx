@@ -1,12 +1,10 @@
 import { db } from "@/lib/prisma";
 import Header from "../components/Header/header";
 import LastServiceCard from "../components/LastServices/lastService";
-import { Clients, Services } from "@prisma/client";
+import { Clients, Services, Status } from "@prisma/client";
 import ServicesSave from "../SaveServices/components/saveServices";
 
 const HomePage = async () => {
-  
-
   interface GetAllServicesProps{
     id: string 
     date: string
@@ -18,9 +16,11 @@ const HomePage = async () => {
     status: string
     client: Clients | null
   }
+  
 
   const getServices = await db.services.findMany()
   const getClients = await db.clients.findMany()
+  const getAllServices = await db.registerService.findMany({include:{client:true,}})
 
   const showAllClients = getClients.map((client:Clients, key:number)=>{
       return client
@@ -30,19 +30,11 @@ const HomePage = async () => {
       return service
   })
   
-
-  const getAllServices = await db.registerService.findMany({
-    include:{
-      client:true,
-    }
-    
-  })
-
   const showServices = getAllServices.map((service:GetAllServicesProps, key:number)=>{
-    
+
     return (
       <LastServiceCard
-        status={service.status}
+        status={service.status as Status}
         id={service.id}
         key={service.id }
         description={service.descriptionOne}

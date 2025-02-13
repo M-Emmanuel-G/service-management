@@ -19,11 +19,11 @@ const SaveServiceDatabase  = async (params:SaveServiceProps) => {
         await db.registerService.create({
             data:{
                 date:GenerateDate.dateNow(),
-                deliveryDate:"Data disponivel assim que for aprovado!",
+                deliveryDate:"Indisponivel!",
                 descriptionOne:params.description,
                 descriptionTwo:"",
                 registrationDate:GenerateDate.dateNow(),
-                startDate:"Data disponivel assim que for aprovado!",
+                startDate:"Indisponivel!",
                 clientID:params.clientID,
                 serviceID:params.serviceID,
                 

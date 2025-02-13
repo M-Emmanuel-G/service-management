@@ -1,3 +1,4 @@
+import { GenerateDate } from "@/app/Services/GenerateDate";
 import {
     Dialog,
     DialogContent,
@@ -20,6 +21,17 @@ interface getInfoServicesProps{
   
 
 const GetInfoServices = (params:getInfoServicesProps) => {
+
+    
+
+    const verifyDelay = ()=>{
+
+        if (params.deliveryDate === "Indisponivel!") return "Aguardando..."
+        if (params.deliveryDate <  GenerateDate.dateNow()) return "Dentro do prazo"
+        if (params.deliveryDate >  GenerateDate.dateNow()) return `Em atrasado`
+        
+    }
+
     return ( 
         <Dialog>
             <DialogTrigger>
@@ -51,6 +63,10 @@ const GetInfoServices = (params:getInfoServicesProps) => {
                 <div className="w-full flex justify-between">
                     <strong className="text-black">Data de entrega: </strong>
                     {params.deliveryDate}
+                </div>
+                <div className="w-full flex justify-between">
+                    <strong>Situção:</strong>
+                    <span>{verifyDelay()}</span>
                 </div>
                 </DialogHeader>
             </DialogContent>

@@ -1,3 +1,5 @@
+"use client"
+
 import { GenerateDate } from "@/app/Services/GenerateDate";
 import {
     Dialog,
@@ -6,8 +8,11 @@ import {
     DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog"
+import { Separator } from "@/components/ui/separator";
 import { Clients } from "@prisma/client";
 import { ChevronRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import RemoveService from "./Components/removeService";
 
 interface getInfoServicesProps{
     client:Clients | null
@@ -16,21 +21,27 @@ interface getInfoServicesProps{
     id:string
     registrationDate: string
     startDate: string
-    deliveryDate: string
+    deliveryDate: string 
+}
+
+interface ColorProps{
+    response:string
+    color:string
 }
   
 
 const GetInfoServices = (params:getInfoServicesProps) => {
 
-    
+    const [color, setColor] = useState<ColorProps>({
+        color:"",
+        response:""
+    })
 
-    const verifyDelay = ()=>{
-
-        if (params.deliveryDate === "Indisponivel!") return "Aguardando..."
-        if (params.deliveryDate <  GenerateDate.dateNow()) return "Dentro do prazo"
-        if (params.deliveryDate >  GenerateDate.dateNow()) return `Em atrasado`
-        
-    }
+    useEffect(()=>{
+        if(params.deliveryDate === "Indisponivel") setColor({color:"", response:""})
+        if (params.deliveryDate >  GenerateDate.dateNow()) setColor({color:"text-green-400", response:"Dentro do prazo"})
+        if (params.deliveryDate <  GenerateDate.dateNow()) setColor({color:"text-red-400", response:"Em atraso"})
+    },[])
 
     return ( 
         <Dialog>
@@ -39,7 +50,13 @@ const GetInfoServices = (params:getInfoServicesProps) => {
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                <DialogTitle className="text-2xl my-4">Informações do serviço</DialogTitle>
+                <DialogTitle className="text-2xl my-4">Informações do Serviço</DialogTitle>
+                <div className="w-full flex justify-center">
+                    <strong className={`${color.color} text-xl`}>{color.response} </strong>
+                </div>
+                <div className="w-full flex justify-center">
+                    <Separator className=" w-11/12 h-[1px] bg-black rounded-3xl my-2"/>
+                </div>
                 <div className="w-full flex justify-between">
                     <strong className="text-black">Cliente: </strong>
                     {params.client?.nameClient}
@@ -52,21 +69,32 @@ const GetInfoServices = (params:getInfoServicesProps) => {
                     <strong className="text-black">Detalhes: </strong>
                     {params.description}
                 </div>
+                <div className="w-full flex justify-center">
+                    <Separator className=" w-11/12 h-[1px] bg-black rounded-3xl my-2"/>
+                </div>
                 <div className="w-full flex justify-between">
-                    <strong className="text-black">Data de registro: </strong>
+                    <strong className="text-black">Registrado em: </strong>
                     {params.registrationDate}
                 </div>
                 <div className="w-full flex justify-between">
-                    <strong className="text-black">Data de inicio: </strong>
+                    <strong className="text-black">Inicio previsto: </strong>
                     {params.startDate}
                 </div>
                 <div className="w-full flex justify-between">
-                    <strong className="text-black">Data de entrega: </strong>
-                    {params.deliveryDate}
+                    <strong className="text-black">Data atual: </strong>
+                    {GenerateDate.dateNow()}
                 </div>
                 <div className="w-full flex justify-between">
-                    <strong>Situção:</strong>
-                    <span>{verifyDelay()}</span>
+                    <strong className="text-black">Entrega: </strong>
+                    {params.deliveryDate}
+                </div>
+                <div className="w-full flex justify-center">
+                    <Separator className=" w-11/12 h-[1px] bg-black rounded-3xl my-2"/>
+                </div>
+                <div className="w-full flex justify-center">
+                    <RemoveService
+                        id={params.id}
+                    />
                 </div>
                 </DialogHeader>
             </DialogContent>

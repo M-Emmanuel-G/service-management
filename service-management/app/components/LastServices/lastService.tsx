@@ -10,8 +10,6 @@ import {
 import GetInfoServices from "../GetInfoServices/getInfoServices";
 import { Clients, Status } from "@prisma/client";
 import UpdateStatus from "@/app/SaveServices/components/upateStatus";
-import { useEffect } from "react";
-import { GenerateDate } from "@/app/Services/GenerateDate";
 
   
 interface ServiceCardProps{

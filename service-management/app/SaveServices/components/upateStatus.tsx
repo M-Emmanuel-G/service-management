@@ -49,7 +49,7 @@ const UpdateStatus = (params:UpdateStatusProps) => {
     return ( 
         <AlertDialog>
             <AlertDialogTrigger className=" my-4 font-bold">
-                Editar
+                Atualizar Status
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>

@@ -47,8 +47,6 @@ const HomePage = async () => {
     )
   })
 
-  GenerateDate.dateDelay("10/03/2021")
-
     return ( 
         <main className="w-screen h-screen flex flex-col items-center justify-center relative">
         <Header/>

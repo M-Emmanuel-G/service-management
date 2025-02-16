@@ -14,6 +14,7 @@ import { ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import RemoveService from "./Components/removeService";
 import UpdateStatus from "@/app/SaveServices/components/upateStatus";
+import SendQuote from "../SendQuote/sendQuote";
 
 interface getInfoServicesProps{
     client:Clients | null
@@ -39,11 +40,11 @@ const GetInfoServices = (params:getInfoServicesProps) => {
     })
 
     useEffect(()=>{
-        if(params.deliveryDate === "Indisponivel") setColor({color:"text-black", response:""})
         const compare = GenerateDate.dateDelay(params.deliveryDate)
-        if(compare === false ) setColor({color:"text-green-400", response:"Dentro do prazo"})
-        if(compare === true ) setColor({color:"text-red-400", response:"Em atraso"})
         
+            if(params.deliveryDate === "Indisponivel!") setColor({color:"text-yellow-400", response:"Aguardando..."})
+            else if(compare === false ) setColor({color:"text-green-400", response:"Dentro do prazo"})
+            else if(compare === true ) setColor({color:"text-red-400", response:"Em atraso"})
     },[])
 
     return ( 
@@ -95,6 +96,11 @@ const GetInfoServices = (params:getInfoServicesProps) => {
                     <Separator className=" w-11/12 h-[1px] bg-black rounded-3xl my-2"/>
                 </div>
                 <div className="w-full flex justify-center flex-col items-center">
+                    <SendQuote
+                        id={params.id}
+                        client={params.client?.nameClient}
+                        service=""
+                    />
                     <UpdateStatus
                         id={params.id}
                         status={params.status}

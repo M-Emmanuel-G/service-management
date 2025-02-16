@@ -23,19 +23,19 @@ const UpdateServiceDatabase = async (params:UpdateStatusProps) => {
         if(params.status === Status.Atrasado) newStatus = Status.Finalizado
         if(params.status === Status.Finalizado) return "O serviço já foi finalizado!"
 
-        if(params.status === Status.Aprovado){
-            await db.registerService.update({
-                data:{
-                    status:newStatus,
-                    startDate: GenerateDate.dateStart(),
-                    deliveryDate:GenerateDate.dateDelivery(),
-                    registrationDate:GenerateDate.dateNow()
-                },
-                where:{
-                    id: params.id
-                }
-            })
-        }
+        await db.registerService.update({
+            data:{
+                status:newStatus,
+                startDate: GenerateDate.dateStart(),
+                deliveryDate:GenerateDate.dateDelivery(),
+                registrationDate:GenerateDate.dateNow()
+            },
+            where:{
+                id: params.id
+            }
+        })
+
+        
 
         revalidatePath("/HomePage")
         return "Status atualizado com sucesso!"

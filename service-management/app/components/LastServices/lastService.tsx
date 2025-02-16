@@ -9,7 +9,6 @@ import {
   } from "@/components/ui/card"
 import GetInfoServices from "../GetInfoServices/getInfoServices";
 import { Clients, Status } from "@prisma/client";
-import UpdateStatus from "@/app/SaveServices/components/upateStatus";
 
   
 interface ServiceCardProps{
@@ -32,10 +31,6 @@ const LastServiceCard = (params:ServiceCardProps) => {
                 <CardDescription><strong className="text-black">Status: </strong>{params.status}</CardDescription>
             </CardHeader>
             <CardContent className="w-1/6 h-10 flex justify-end ">
-                <UpdateStatus
-                    id={params.id}
-                    status={params.status}
-                />
                 <GetInfoServices
                     client={params.client}
                     description={params.description}

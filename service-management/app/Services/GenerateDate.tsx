@@ -14,10 +14,11 @@ export abstract class GenerateDate{
         return moment().add(5, "days").format("L")
     }
 
-    static dateDelay = ()=>{
-        const dateNow = moment().format("L")
-        const dateDelivery = moment().add(15, "days").format("L")
-
-        if (dateNow > dateDelivery) return ""
+    static dateDelay = (date:string)=>{
+        const date1 = moment()
+        const date2 = date
+        
+        return date1.isAfter(date2)
+        
     }
 }

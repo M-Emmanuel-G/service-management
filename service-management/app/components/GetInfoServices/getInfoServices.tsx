@@ -9,15 +9,16 @@ import {
     DialogTrigger,
   } from "@/components/ui/dialog"
 import { Separator } from "@/components/ui/separator";
-import { Clients } from "@prisma/client";
+import { Clients, Status } from "@prisma/client";
 import { ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import RemoveService from "./Components/removeService";
+import UpdateStatus from "@/app/SaveServices/components/upateStatus";
 
 interface getInfoServicesProps{
     client:Clients | null
     description:string
-    status:string
+    status:Status
     id:string
     registrationDate: string
     startDate: string
@@ -38,9 +39,11 @@ const GetInfoServices = (params:getInfoServicesProps) => {
     })
 
     useEffect(()=>{
-        if(params.deliveryDate === "Indisponivel") setColor({color:"", response:""})
-        if (params.deliveryDate >  GenerateDate.dateNow()) setColor({color:"text-green-400", response:"Dentro do prazo"})
-        if (params.deliveryDate <  GenerateDate.dateNow()) setColor({color:"text-red-400", response:"Em atraso"})
+        if(params.deliveryDate === "Indisponivel") setColor({color:"text-black", response:""})
+        const compare = GenerateDate.dateDelay(params.deliveryDate)
+        if(compare === false ) setColor({color:"text-green-400", response:"Dentro do prazo"})
+        if(compare === true ) setColor({color:"text-red-400", response:"Em atraso"})
+        
     },[])
 
     return ( 
@@ -91,7 +94,11 @@ const GetInfoServices = (params:getInfoServicesProps) => {
                 <div className="w-full flex justify-center">
                     <Separator className=" w-11/12 h-[1px] bg-black rounded-3xl my-2"/>
                 </div>
-                <div className="w-full flex justify-center">
+                <div className="w-full flex justify-center flex-col items-center">
+                    <UpdateStatus
+                        id={params.id}
+                        status={params.status}
+                    />
                     <RemoveService
                         id={params.id}
                     />

@@ -11,7 +11,6 @@ import {
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
 import { Status } from "@prisma/client";
-import { Pencil } from "lucide-react";
 import UpdateServiceDatabase from "../Actions/updateStatusDatabase";
   
 interface UpdateStatusProps{
@@ -49,8 +48,8 @@ const UpdateStatus = (params:UpdateStatusProps) => {
 
     return ( 
         <AlertDialog>
-            <AlertDialogTrigger>
-                <Pencil className="mx-2 relative top-1" width={25} height={25}/>
+            <AlertDialogTrigger className=" my-4 font-bold">
+                Editar
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>

@@ -3,6 +3,7 @@ import Header from "../components/Header/header";
 import LastServiceCard from "../components/LastServices/lastService";
 import { Clients, Services, Status } from "@prisma/client";
 import ServicesSave from "../SaveServices/components/saveServices";
+import { GenerateDate } from "../Services/GenerateDate";
 
 const HomePage = async () => {
   interface GetAllServicesProps{
@@ -45,6 +46,8 @@ const HomePage = async () => {
       />
     )
   })
+
+  GenerateDate.dateDelay("10/03/2021")
 
     return ( 
         <main className="w-screen h-screen flex flex-col items-center justify-center relative">

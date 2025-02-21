@@ -7,6 +7,7 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -37,11 +38,15 @@ model RegisterService{
   descriptionOne String
   descriptionTwo String
   status Status @default(Orcamento)
+  sendQuote EnumQuote @default(Aguardando)
 
   clientID String
   client Clients @relation(fields: [clientID], references: [id])
   serviceID String
   service Services @relation(fields: [serviceID], references: [id])
+
+  quote Quote[]
+  
 }
 
 enum Status{
@@ -51,4 +56,26 @@ enum Status{
   Iniciado
   Finalizado
   Atrasado
+}
+
+enum EnumQuote{
+  Enviado
+  Aguardando
+}
+
+model Quote{
+  id String @id @default(cuid())
+  itemOne String
+  itemTwo String
+  itemThree String
+  itemFour String
+  itemFive String
+  itemSix String
+  itemSeven String
+  itemEight String
+  itemNine String
+  itemTen String
+
+  registerServiceID String
+  registerService RegisterService @relation(fields: [registerServiceID], references: [id])
 }

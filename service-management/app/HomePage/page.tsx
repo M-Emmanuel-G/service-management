@@ -3,7 +3,6 @@ import Header from "../components/Header/header";
 import LastServiceCard from "../components/LastServices/lastService";
 import { Clients, Services, Status } from "@prisma/client";
 import ServicesSave from "../SaveServices/components/saveServices";
-import { GenerateDate } from "../Services/GenerateDate";
 
 const HomePage = async () => {
   interface GetAllServicesProps{

@@ -8,7 +8,7 @@ import {
     CardTitle,
   } from "@/components/ui/card"
 import GetInfoServices from "../GetInfoServices/getInfoServices";
-import { Clients, Status } from "@prisma/client";
+import { Clients, EnumQuote, Quote, Status } from "@prisma/client";
 
   
 interface ServiceCardProps{
@@ -19,6 +19,8 @@ interface ServiceCardProps{
     startDate:string
     deliveryDate: string
     registrationDate: string
+    sendQuote: EnumQuote
+
 }
 
 const LastServiceCard = (params:ServiceCardProps) => {
@@ -39,6 +41,7 @@ const LastServiceCard = (params:ServiceCardProps) => {
                     deliveryDate={params.deliveryDate}
                     registrationDate={params.registrationDate}
                     startDate={params.startDate}
+                    sendQuote={params.sendQuote}
                 />
             </CardContent>
         </Card>

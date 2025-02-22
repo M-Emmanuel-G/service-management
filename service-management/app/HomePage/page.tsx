@@ -1,7 +1,7 @@
 import { db } from "@/lib/prisma";
 import Header from "../components/Header/header";
 import LastServiceCard from "../components/LastServices/lastService";
-import { Clients, Services, Status } from "@prisma/client";
+import { Clients, EnumQuote, Quote, Services, Status } from "@prisma/client";
 import ServicesSave from "../SaveServices/components/saveServices";
 
 const HomePage = async () => {
@@ -13,14 +13,19 @@ const HomePage = async () => {
     deliveryDate: string
     descriptionOne: string
     descriptionTwo: string
+    sendQuote: EnumQuote
     status: string
     client: Clients | null
+  }
+
+  interface QuoteProps{
+    quote:Quote
   }
   
 
   const getServices = await db.services.findMany()
   const getClients = await db.clients.findMany()
-  const getAllServices = await db.registerService.findMany({include:{client:true,}})
+  const getAllServices = await db.registerService.findMany({include:{client:true}}) as GetAllServicesProps[]
 
   const showAllClients = getClients.map((client:Clients, key:number)=>{
       return client
@@ -42,6 +47,7 @@ const HomePage = async () => {
         client={service.client}
         deliveryDate={service.deliveryDate}
         registrationDate={service.registrationDate}
+        sendQuote={service.sendQuote}
       />
     )
   })

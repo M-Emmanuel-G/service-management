@@ -9,12 +9,13 @@ import {
     DialogTrigger,
   } from "@/components/ui/dialog"
 import { Separator } from "@/components/ui/separator";
-import { Clients, Status } from "@prisma/client";
+import { Clients, EnumQuote, Quote, Status } from "@prisma/client";
 import { ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import RemoveService from "./Components/removeService";
 import UpdateStatus from "@/app/SaveServices/components/upateStatus";
 import SendQuote from "../SendQuote/sendQuote";
+import EachQuote from "../EachQuote/eachQuote";
 
 interface getInfoServicesProps{
     client:Clients | null
@@ -23,7 +24,8 @@ interface getInfoServicesProps{
     id:string
     registrationDate: string
     startDate: string
-    deliveryDate: string 
+    deliveryDate: string
+    sendQuote: EnumQuote
 }
 
 interface ColorProps{
@@ -96,11 +98,19 @@ const GetInfoServices = (params:getInfoServicesProps) => {
                     <Separator className=" w-11/12 h-[1px] bg-black rounded-3xl my-2"/>
                 </div>
                 <div className="w-full flex justify-center flex-col items-center">
-                    <SendQuote
-                        id={params.id}
-                        client={params.client?.nameClient}
-                        service=""
-                    />
+                    {
+                        params.sendQuote === EnumQuote.Aguardando? 
+                            <SendQuote
+                                id={params.id}
+                                client={params.client?.nameClient}
+                                service=""
+                                sendQuote={params.sendQuote}
+                            />
+                        :
+                                <EachQuote
+                                    id={params.id}
+                                />
+                    }
                     <UpdateStatus
                         id={params.id}
                         status={params.status}

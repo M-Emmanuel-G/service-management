@@ -14,8 +14,9 @@ import { ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import RemoveService from "./Components/removeService";
 import UpdateStatus from "@/app/SaveServices/components/upateStatus";
-import SendQuote from "../SendQuote/sendQuote";
-import EachQuote from "../EachQuote/eachQuote";
+import SendQuoteComponent from "../SendQuoteComp/sendQuoteComp";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface getInfoServicesProps{
     client:Clients | null
@@ -26,6 +27,7 @@ interface getInfoServicesProps{
     startDate: string
     deliveryDate: string
     sendQuote: EnumQuote
+    quote: Quote | null
 }
 
 interface ColorProps{
@@ -35,6 +37,8 @@ interface ColorProps{
   
 
 const GetInfoServices = (params:getInfoServicesProps) => {
+
+    const router = useRouter()
 
     const [color, setColor] = useState<ColorProps>({
         color:"",
@@ -100,16 +104,14 @@ const GetInfoServices = (params:getInfoServicesProps) => {
                 <div className="w-full flex justify-center flex-col items-center">
                     {
                         params.sendQuote === EnumQuote.Aguardando? 
-                            <SendQuote
+                            <SendQuoteComponent
                                 id={params.id}
                                 client={params.client?.nameClient}
                                 service=""
                                 sendQuote={params.sendQuote}
                             />
                         :
-                                <EachQuote
-                                    id={params.id}
-                                />
+                        <Link href={`/${params.id}`}>Ver Orçamento</Link>
                     }
                     <UpdateStatus
                         id={params.id}

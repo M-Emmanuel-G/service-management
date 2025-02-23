@@ -35,7 +35,7 @@ import { useState } from "react"
     registerID:string
 }
 
-const SendQuote = (params:SendQuoteProps) => {
+const SendQuoteComponent = (params:SendQuoteProps) => {
 
     const [itemOne, setItemOne] = useState<string>("")
     const [itemTwo, setItemTwo] = useState<string>("")
@@ -133,4 +133,4 @@ const SendQuote = (params:SendQuoteProps) => {
      );
 }
  
-export default SendQuote;
+export default SendQuoteComponent

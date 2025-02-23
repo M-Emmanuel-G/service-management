@@ -1,3 +1,6 @@
+"use client"
+
+import { Services } from "@/app/Services/Services"
 import {
     AlertDialog,
     AlertDialogAction,
@@ -9,10 +12,11 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
-import { db } from "@/lib/prisma"
+import { Quote } from "@prisma/client"
   
   interface SendQuoteProps{
     id:string
+    quote: Quote | null
   }
 
 const EachQuote =  (params:SendQuoteProps) => {
@@ -24,9 +28,13 @@ const EachQuote =  (params:SendQuoteProps) => {
                 <AlertDialogHeader>
                 <AlertDialogTitle className="text-2xl my-2">Orçamento</AlertDialogTitle>
                 <AlertDialogDescription className="flex flex-col text-white">
-                
-                   
                 </AlertDialogDescription>
+                <section>
+                  <div>
+                    <strong>descricao</strong>
+                    <span>{params.quote?.itemOne}</span>
+                  </div>
+                </section>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                 <AlertDialogCancel className="bg-red-700 border-0 hover:bg-red-700 hover:text-white text-xl">Cancel</AlertDialogCancel>

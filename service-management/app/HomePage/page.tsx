@@ -4,28 +4,35 @@ import LastServiceCard from "../components/LastServices/lastService";
 import { Clients, EnumQuote, Quote, Services, Status } from "@prisma/client";
 import ServicesSave from "../SaveServices/components/saveServices";
 
+interface GetAllServicesProps{
+  id: string 
+  date: string
+  registrationDate: string
+  startDate: string
+  deliveryDate: string
+  descriptionOne: string
+  descriptionTwo: string
+  sendQuote: EnumQuote
+  status: string
+  client: Clients | null
+  quote: Quote | null
+}
+
+interface QuoteProps{
+  quote:Quote
+}
+
 const HomePage = async () => {
-  interface GetAllServicesProps{
-    id: string 
-    date: string
-    registrationDate: string
-    startDate: string
-    deliveryDate: string
-    descriptionOne: string
-    descriptionTwo: string
-    sendQuote: EnumQuote
-    status: string
-    client: Clients | null
-  }
-
-  interface QuoteProps{
-    quote:Quote
-  }
   
-
   const getServices = await db.services.findMany()
   const getClients = await db.clients.findMany()
-  const getAllServices = await db.registerService.findMany({include:{client:true}}) as GetAllServicesProps[]
+
+  const getAllServices = await db.registerService.findMany({
+    include:{
+      client:true,
+      quote:true
+    }
+  }) as any
 
   const showAllClients = getClients.map((client:Clients, key:number)=>{
       return client
@@ -36,7 +43,7 @@ const HomePage = async () => {
   })
   
   const showServices = getAllServices.map((service:GetAllServicesProps, key:number)=>{
-
+    
     return (
       <LastServiceCard
         status={service.status as Status}
@@ -48,6 +55,7 @@ const HomePage = async () => {
         deliveryDate={service.deliveryDate}
         registrationDate={service.registrationDate}
         sendQuote={service.sendQuote}
+        quote={service.quote}
       />
     )
   })

@@ -20,7 +20,7 @@ interface ServiceCardProps{
     deliveryDate: string
     registrationDate: string
     sendQuote: EnumQuote
-
+    quote: Quote | null
 }
 
 const LastServiceCard = (params:ServiceCardProps) => {
@@ -42,6 +42,7 @@ const LastServiceCard = (params:ServiceCardProps) => {
                     registrationDate={params.registrationDate}
                     startDate={params.startDate}
                     sendQuote={params.sendQuote}
+                    quote={params.quote}
                 />
             </CardContent>
         </Card>

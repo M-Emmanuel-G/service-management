@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Clients{
+  id String @id @default(cuid())
+  nameClient String
+  address String
+  cnpj String @unique
+  cpf String @unique 
+  registerService RegisterService[]
+}
+
+model Services{
+  id String @id @default(cuid())
+  service String
+  description String
+  value Decimal @default(0)
+
+  registerService RegisterService[]
+}
+
+model RegisterService{
+  id String @id @default(cuid())
+  date String
+  registrationDate String
+  startDate String
+  deliveryDate String
+  descriptionOne String
+  descriptionTwo String
+  status Status @default(Orcamento)
+  sendQuote EnumQuote @default(Aguardando)
+
+  clientID String
+  client Clients @relation(fields: [clientID], references: [id])
+  serviceID String
+  service Services @relation(fields: [serviceID], references: [id])
+
+  quote Quote[]
+  
+}
+
+enum Status{
+  Orcamento
+  Aguardando
+  Aprovado
+  Iniciado
+  Finalizado
+  Atrasado
+}
+
+enum EnumQuote{
+  Enviado
+  Aguardando
+}
+
+model Quote{
+  id String @id @default(cuid())
+  quantity Int @default(0)
+
+  dateCreated String @default("00/00/0000")
+
+  productID String @default("")
+  product Products @relation(fields:[ productID], references: [id])
+
+  registerServiceID String @default("")
+  registerService RegisterService @relation(fields: [registerServiceID], references: [id])
+}
+
+model Products{
+
+  id String @id @default(cuid())
+  product String
+  value Decimal
+  createdAt String @default("00/00/0000")
+
+  quote Quote[]
+}

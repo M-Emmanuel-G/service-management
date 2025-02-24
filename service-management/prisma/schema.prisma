@@ -26,6 +26,8 @@ model Services{
   id String @id @default(cuid())
   service String
   description String
+  value Decimal
+
   registerService RegisterService[]
 }
 
@@ -65,17 +67,22 @@ enum EnumQuote{
 
 model Quote{
   id String @id @default(cuid())
-  itemOne String
-  itemTwo String
-  itemThree String
-  itemFour String
-  itemFive String
-  itemSix String
-  itemSeven String
-  itemEight String
-  itemNine String
-  itemTen String
+  quantity Int
+
+  dateCreated DateTime
+
+  productID String
+  product Products @relation(fields:[ productID], references: [id])
 
   registerServiceID String
   registerService RegisterService @relation(fields: [registerServiceID], references: [id])
+}
+
+model Products{
+  id String @id @default(cuid())
+  product String
+  value Decimal
+  createdAt DateTime
+
+  quote Quote[]
 }

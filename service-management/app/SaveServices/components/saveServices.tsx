@@ -2,11 +2,8 @@
 
 import {
     AlertDialog,
-    AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
     AlertDialogTrigger,
@@ -16,15 +13,12 @@ import { Clients, Services } from "@prisma/client";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import SaveServiceDatabase from "../Actions/SaveServicesDatabase";
-import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
   
 interface SaveServicesProps{
  service:Services[]
  clients:Clients[]
 }
-
-
 
 const ServicesSave = (params:SaveServicesProps) => {
 
@@ -33,11 +27,11 @@ const ServicesSave = (params:SaveServicesProps) => {
       const [description, setDescription] = useState<string>("")
 
     const showClients = params.clients.map((client:Clients, key:number)=>{
-        return ( <option onClick={()=>{setClientId(client.id)}} className="text-white bg-transparent" key={client.id}>{client.nameClient}</option>)
+        return ( <option onClick={()=>{setClientId(client.id)}} className="text-white bg-black border-0" key={client.id}>{client.nameClient}</option>)
     })
 
     const showServices = params.service.map((service:Services, key:number)=>{
-        return ( <option onClick={()=>{setServiceId(service.id)}} className="text-white" key={service.id}>{service.service}</option>)
+        return ( <option onClick={()=>{setServiceId(service.id)}} className="text-white bg-black border-0" key={service.id}>{service.service}</option>)
     })
 
     const saveServicesDatabase = async(ev:any)=>{
@@ -68,12 +62,12 @@ const ServicesSave = (params:SaveServicesProps) => {
                 </AlertDialogHeader>
                 <form  onSubmit={saveServicesDatabase}>
                     <div>
-                        <select className="w-full h-12 flex bg-transparent text-white my-4">
+                        <select className="w-full h-12 flex bg-transparent bg-black border-0 text-white my-4">
                             {showClients}
                         </select>
                     </div>
                     <div>
-                        <select className="w-full h-12 flex bg-transparent text-white my-4">
+                        <select className="w-full h-12 flex bg-transparent bg-black border-0 text-white my-4">
                             {showServices}
                         </select>
                     </div>

@@ -23,17 +23,17 @@ import Link from "next/link";
                 </SheetTitle>
                 <SheetDescription className="w-full flex flex-col items-start">
                     <Link
-                        href="/SaveServices"
+                        href="/HomePage"
                         className="w-60 h-20 text-xl flex justify-center items-center text-white my-4"
-                        > Novo Servico
+                        > Inicio
                     </Link>
                     <Link
-                        href="/"
+                        href="/HomePage"
                         className="w-60 h-20 text-xl flex justify-center items-center text-white my-4"
                         > Clientes
                     </Link>
                     <Link
-                        href="/"
+                        href="/HomePage"
                         className="w-60 h-20 text-xl flex justify-center items-center text-white my-4"
                         > Servicos
                     </Link>

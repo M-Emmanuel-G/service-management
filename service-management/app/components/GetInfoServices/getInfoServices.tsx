@@ -111,7 +111,7 @@ const GetInfoServices = (params:getInfoServicesProps) => {
                                 sendQuote={params.sendQuote}
                             />
                         :
-                        <Link href={`/${params.id}`}>Ver Orçamento</Link>
+                        <Link className="font-bold" href={`/${params.id}`}>Ver Orçamento</Link>
                     }
                     <UpdateStatus
                         id={params.id}

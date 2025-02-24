@@ -13,6 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 model Clients{
   id String @id @default(cuid())
   nameClient String
@@ -26,7 +27,7 @@ model Services{
   id String @id @default(cuid())
   service String
   description String
-  value Decimal
+  value Decimal @default(0)
 
   registerService RegisterService[]
 }
@@ -67,22 +68,23 @@ enum EnumQuote{
 
 model Quote{
   id String @id @default(cuid())
-  quantity Int
+  quantity Int @default(0)
 
-  dateCreated DateTime
+  dateCreated String @default("00/00/0000")
 
-  productID String
+  productID String @default("")
   product Products @relation(fields:[ productID], references: [id])
 
-  registerServiceID String
+  registerServiceID String @default("")
   registerService RegisterService @relation(fields: [registerServiceID], references: [id])
 }
 
 model Products{
+
   id String @id @default(cuid())
   product String
   value Decimal
-  createdAt DateTime
+  createdAt String @default("00/00/0000")
 
   quote Quote[]
 }

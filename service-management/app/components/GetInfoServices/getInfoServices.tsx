@@ -1,6 +1,6 @@
 "use client"
 
-import { GenerateDate } from "@/app/Services/GenerateDate";
+import { GenerateDate } from "@/app/ServicesDatabase/GenerateDate";
 import {
     Dialog,
     DialogContent,

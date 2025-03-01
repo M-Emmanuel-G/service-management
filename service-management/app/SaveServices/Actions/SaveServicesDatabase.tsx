@@ -1,6 +1,6 @@
 "use server"
 
-import { GenerateDate } from "@/app/Services/GenerateDate"
+import { GenerateDate } from "@/app/ServicesDatabase/GenerateDate"
 import { db } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 

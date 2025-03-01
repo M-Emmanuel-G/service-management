@@ -3,7 +3,8 @@ import Header from "../components/Header/header";
 import CreateServices from "./Components/CreateServices";
 import { Services } from "@prisma/client";
 import { Card, CardContent, CardDescription, CardTitle } from "@/components/ui/card";
-import { Pencil, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
+import UpdateServices from "./Components/updateServices";
 
 const ServicesPage = async () => {
 
@@ -11,11 +12,19 @@ const ServicesPage = async () => {
 
   const showServices = getServices.map((service:Services, key:number)=>{
     return(
-      <Card className="w-full h-10 flex items-center justify-between p-2" key={service.id}>
+      <Card className="w-full h-24 flex items-center justify-between p-2" key={service.id}>
         <CardTitle>{service.service}</CardTitle>
-        <CardDescription>{service.description}</CardDescription>
+        <CardDescription className="flex flex-col">
+          {service.description}
+          <span className="font-bold text-xl">R$ {Number(service.value).toFixed(2)}</span>
+        </CardDescription>
         <CardContent className=" h-10 flex items-center justify-center">
-          <Pencil className="relative top-3 mx-2"/>
+          <UpdateServices
+            id={service.id}
+            description={service.description}
+            service={service.service}
+            value={Number(service.value)}
+         />
           <Trash2 className="relative top-3 mx-2"/>
         </CardContent>
       </Card>

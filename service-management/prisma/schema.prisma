@@ -33,7 +33,7 @@ model Services{
   id String @id @default(cuid())
   service String
   description String
-  value Decimal @default(0)
+  value Decimal @db.Decimal(10,2)
 
   registerService RegisterService[]
 }
@@ -89,7 +89,7 @@ model Products{
 
   id String @id @default(cuid())
   product String
-  value Decimal
+  value Decimal @db.Decimal(10,2)
   createdAt String @default("00/00/0000")
 
   quote Quote[]

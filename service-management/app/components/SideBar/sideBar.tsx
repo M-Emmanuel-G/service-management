@@ -28,7 +28,7 @@ import Link from "next/link";
                         > Inicio
                     </Link>
                     <Link
-                        href="/HomePage"
+                        href="/Clients"
                         className="w-60 h-20 text-xl flex justify-center items-center text-white my-4"
                         > Clientes
                     </Link>

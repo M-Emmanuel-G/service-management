@@ -20,8 +20,14 @@ model Clients{
   address String
   cnpj String @unique
   cpf String @unique 
+  typePerson TypePerson @default(FISICA)
   registerService RegisterService[]
 }
+
+ enum TypePerson{
+  FISICA
+  JURIDICA
+ }
 
 model Services{
   id String @id @default(cuid())

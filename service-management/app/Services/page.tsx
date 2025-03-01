@@ -5,6 +5,7 @@ import { Services } from "@prisma/client";
 import { Card, CardContent, CardDescription, CardTitle } from "@/components/ui/card";
 import { Trash2 } from "lucide-react";
 import UpdateServices from "./Components/updateServices";
+import DeleteServices from "./Components/updateServices copy";
 
 const ServicesPage = async () => {
 
@@ -25,7 +26,9 @@ const ServicesPage = async () => {
             service={service.service}
             value={Number(service.value)}
          />
-          <Trash2 className="relative top-3 mx-2"/>
+          <DeleteServices
+            id={service.id}
+          />
         </CardContent>
       </Card>
     )

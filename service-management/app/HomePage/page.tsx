@@ -1,8 +1,10 @@
+
+
 import { db } from "@/lib/prisma";
 import Header from "../components/Header/header";
 import LastServiceCard from "../components/LastServices/lastService";
 import { Clients, EnumQuote, Quote, Services, Status } from "@prisma/client";
-import ServicesSave from "../SaveServices/components/saveServices";
+import SaveServices from "./components/SaveServices";
 
 interface GetAllServicesProps{
   id: string 
@@ -36,14 +38,20 @@ const HomePage = async () => {
 
   const showAllClients = getClients.map((client:Clients, key:number)=>{
       return client
+      
   })
 
-  const showAllServices = getServices.map((service:Services)=>{ 
-      return service
+  const showAllServices = getServices.map((service:Services)=>{
+    return {
+      id: service.id,
+      value: Number(service.value),
+      description: service.description,
+      service: service.service
+    }
   })
   
   const showServices = getAllServices.map((service:GetAllServicesProps, key:number)=>{
-    
+
     return (
       <LastServiceCard
         status={service.status as Status}
@@ -65,15 +73,15 @@ const HomePage = async () => {
         <Header
           pageName="Inicio"
         />
-        <section className="w-full h-[90%] flex items-center justify-center">
-          <section className="w-full h-full flex flex-col px-4 overflow-y-auto">
+        <section className="w-full h-[10%] flex items-center justify-center">
+          <SaveServices
+            client={showAllClients}
+            services={showAllServices}
+          />
+        </section>
+          <section className="w-full h-[80%] flex flex-col px-4 overflow-y-auto">
             {showServices} 
           </section>
-        </section>
-        <ServicesSave
-          // service={showAllServices}
-          // clients={showAllClients}
-        />
       </main>
      );
 }

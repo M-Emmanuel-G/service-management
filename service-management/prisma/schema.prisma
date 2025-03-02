@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://postgres.oknebzukzgxtjguzvgfd:Emmanuel0021!@@!@aws-0-us-west-1.pooler.supabase.com:5432/postgres"
 }
 
 
@@ -20,7 +20,7 @@ model Clients{
   address String
   cnpj String @unique
   cpf String @unique 
-  typePerson TypePerson @default(FISICA)
+  typePerson TypePerson @default(FISICA) 
   registerService RegisterService[]
 }
 

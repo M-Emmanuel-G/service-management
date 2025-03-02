@@ -13,7 +13,7 @@ import { Clients, EnumQuote, Quote, Status } from "@prisma/client";
 import { ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import RemoveService from "./Components/removeService";
-import UpdateStatus from "@/app/SaveServices/components/upateStatus";
+// import UpdateStatus from "@/app/SaveServices/components/upateStatus";
 import SendQuoteComponent from "../SendQuoteComp/sendQuoteComp";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -113,10 +113,10 @@ const GetInfoServices = (params:getInfoServicesProps) => {
                         :
                         <Link className="font-bold" href={`/${params.id}`}>Ver Orçamento</Link>
                     }
-                    <UpdateStatus
+                    {/* <UpdateStatus
                         id={params.id}
                         status={params.status}
-                    />
+                    /> */}
                     <RemoveService
                         id={params.id}
                     />

@@ -62,15 +62,17 @@ const HomePage = async () => {
 
     return ( 
         <main className="w-screen h-screen flex flex-col items-center justify-center relative">
-        <Header/>
+        <Header
+          pageName="Inicio"
+        />
         <section className="w-full h-[90%] flex items-center justify-center">
           <section className="w-full h-full flex flex-col px-4 overflow-y-auto">
             {showServices} 
           </section>
         </section>
         <ServicesSave
-          service={showAllServices}
-          clients={showAllClients}
+          // service={showAllServices}
+          // clients={showAllClients}
         />
       </main>
      );

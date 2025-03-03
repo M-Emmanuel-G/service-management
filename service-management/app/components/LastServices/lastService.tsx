@@ -8,7 +8,9 @@ import {
     CardTitle,
   } from "@/components/ui/card"
 import GetInfoServices from "../GetInfoServices/getInfoServices";
-import { Clients, EnumQuote, Quote, Status } from "@prisma/client";
+import { Clients, EnumQuote, Products, Quote, Status } from "@prisma/client";
+import { useGlobalContext } from "@/app/_Context/GlobalContext";
+import { useEffect, useState } from "react";
 
   
 interface ServiceCardProps{
@@ -21,10 +23,26 @@ interface ServiceCardProps{
     registrationDate: string
     sendQuote: EnumQuote
     quote: Quote | null
+    products: Products[]
+}
+
+interface ProductsProps{
+    id:string
+    product:string
+    value: string
+    createdAt: string
 }
 
 const LastServiceCard = (params:ServiceCardProps) => {
 
+    const {products, setProducts} = useGlobalContext()
+
+    useEffect(()=>{
+        if(params.products){
+            setProducts(params.products)
+        }
+        
+    },[])
     return ( 
         <Card className=" w-full bg-stone-300 flex justify-between items-center my-4">
             <CardHeader className="w-5/6">
@@ -43,6 +61,7 @@ const LastServiceCard = (params:ServiceCardProps) => {
                     startDate={params.startDate}
                     sendQuote={params.sendQuote}
                     quote={params.quote}
+                    products={params.products}
                 />
             </CardContent>
         </Card>

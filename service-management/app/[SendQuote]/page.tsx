@@ -11,12 +11,6 @@ const SendQuote = async ({params}:SendQuoteProps) => {
 
     const response = await params
 
-    const materialsValue = 1582
-    const laborValue = ( materialsValue * 0.4 )
-    const percentageDiscount = 0.05 
-    const finalValue =  materialsValue + laborValue
-    const finalValueDiscount = finalValue - (finalValue * percentageDiscount )
-
     const getRegisterService = await db.registerService.findUnique({
         where:{
             id: response.SendQuote
@@ -24,15 +18,36 @@ const SendQuote = async ({params}:SendQuoteProps) => {
         include:{
             client:true,
             quote:true,
-            service:true
+            service:true,
         }
     })
 
     if(!getRegisterService) notFound()
 
+    const getProducts = await db.quote.findUnique({
+        where:{
+            id:getRegisterService.quote[0].id
+        },
+        include:{
+            product:true
+        }
+    })
+
+    if(!getProducts) notFound()
+
+        // const getallProducts = getProducts.map((product)=>{})
+    
+    const materialsValue = 1582 // Valor total dos materiais
+    const laborValue = Number(getRegisterService.service.value)
+    const percentageDiscount = 0.05 // Porcentagem de desconto
+    const finalValue =  materialsValue + laborValue // Valor final
+    const finalValueDiscount = finalValue - (finalValue * percentageDiscount ) // Valor final a vista
+
     return ( 
         <main className="w-screen h-screen flex flex-col items-center justify-center relative">
-        <Header/>
+        <Header
+            pageName="Detalhes do orçamento"
+        />
         <section className="w-full h-[60%] flex flex-col items-center py-4 text-white overflow-auto">
             <h2 className="my-4 text-2xl font-bold">Dados do Orcamento</h2>
             <div className="w-full px-4 text-white my-2 flex justify-between">
@@ -43,24 +58,25 @@ const SendQuote = async ({params}:SendQuoteProps) => {
                 <strong>Serviço:</strong>
                 <span>{getRegisterService.service.service}</span>            
             </div>
+
             <Separator className=" w-11/12 h-[1px] bg-white rounded-3xl my-2"/>
+
             <div className="w-full px-4 text-white my-2 flex justify-center">
                 <h2 className="font-bold text-xl">Descritivo</h2>      
             </div>
-            <div className="w-full px-4 text-white my-2 flex align-center flex-col">
-                <span className="my-2">{getRegisterService.quote[0].itemOne}</span>            
-                <span className="my-2">{getRegisterService.quote[0].itemTwo}</span>            
-                <span className="my-2">{getRegisterService.quote[0].itemThree}</span>            
-                <span className="my-2">{getRegisterService.quote[0].itemFour}</span>            
-                <span className="my-2">{getRegisterService.quote[0].itemFive}</span>            
-                <span className="my-2">{getRegisterService.quote[0].itemSix}</span>            
-                <span className="my-2">{getRegisterService.quote[0].itemSeven}</span>            
-                <span className="my-2">{getRegisterService.quote[0].itemEight}</span>            
-                <span className="my-2">{getRegisterService.quote[0].itemNine}</span>            
-                <span className="my-2">{getRegisterService.quote[0].itemTen}</span>            
+            <div className="w-full px-4 text-white my-2 flex align-center justify-between">
+                <div>
+                    <span className="">{getProducts?.quantity}x </span>
+                    <span className="mx-2">{getProducts?.product.product}</span>
+                </div>
+                <div>
+                    <span>R${Number(getProducts?.product.value).toFixed(2)}</span>
+                </div>
             </div>
         </section>
+
         <Separator className=" w-11/12 h-[1px] bg-white rounded-3xl my-2"/>
+
         <section className="w-full h-[30%] p-4 rounded-t-xl text-white">
             <div>
                 <h2 className="text-xl font-bold text-center">Resumo do Orçamento</h2>

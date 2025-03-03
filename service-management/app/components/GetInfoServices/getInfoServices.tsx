@@ -9,14 +9,14 @@ import {
     DialogTrigger,
   } from "@/components/ui/dialog"
 import { Separator } from "@/components/ui/separator";
-import { Clients, EnumQuote, Quote, Status } from "@prisma/client";
+import { Clients, EnumQuote, Products, Quote, Status } from "@prisma/client";
 import { ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import RemoveService from "./Components/removeService";
-import UpdateStatus from "@/app/SaveServices/components/upateStatus";
 import SendQuoteComponent from "../SendQuoteComp/sendQuoteComp";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import UpdateStatus from "@/app/HomePage/components/UpdateStatus";
 
 interface getInfoServicesProps{
     client:Clients | null
@@ -28,6 +28,7 @@ interface getInfoServicesProps{
     deliveryDate: string
     sendQuote: EnumQuote
     quote: Quote | null
+    products: Products[]
 }
 
 interface ColorProps{
@@ -109,6 +110,9 @@ const GetInfoServices = (params:getInfoServicesProps) => {
                                 client={params.client?.nameClient}
                                 service=""
                                 sendQuote={params.sendQuote}
+                                productID={params.products[0].id} 
+                                quantity={0}
+                                products={params.products}
                             />
                         :
                         <Link className="font-bold" href={`/${params.id}`}>Ver Orçamento</Link>

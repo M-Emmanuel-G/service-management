@@ -3,30 +3,22 @@
 import { db } from "@/lib/prisma"
 import { EnumQuote } from "@prisma/client"
 import { revalidatePath } from "next/cache"
+import { GenerateDate } from "../ServicesDatabase/GenerateDate"
 
 interface SendQuoteProps{
-    itemOne:string,
-    itemTwo:string
-    itemThree:string
-    itemFour:string
-    itemFive:string
-    itemSix:string
-    itemSeven:string
-    itemEight:string
-    itemNine:string
-    itemTen:string
-    registerID:string
+    quantity:number
+    productID:string
+    registerServiceID: string
 }
 
 const SendQuoteDatabase = async (params:SendQuoteProps) => {
    try {
 
-        if(!params.itemOne) return "O primeiro item não pode estar vazio!"
 
         const getRegisterService = await db.registerService.findUnique(
             {
                 where:{
-                    id:params.registerID
+                    id:params.registerServiceID
                 }
             }
         )
@@ -35,17 +27,10 @@ const SendQuoteDatabase = async (params:SendQuoteProps) => {
 
         await db.quote.create({
             data:{
-                itemOne:params.itemOne,
-                itemTwo:params.itemTwo,
-                itemThree:params.itemThree,
-                itemFour:params.itemFour,
-                itemFive:params.itemFive,
-                itemSix:params.itemSix,
-                itemSeven:params.itemSeven,
-                itemEight:params.itemEight,
-                itemNine:params.itemNine,
-                itemTen:params.itemTen,
-                registerServiceID:params.registerID
+                dateCreated:GenerateDate.dateNow(),
+                quantity:params.quantity,
+                productID: params.productID,
+                registerServiceID: params.registerServiceID
             }
         })
 
@@ -54,7 +39,7 @@ const SendQuoteDatabase = async (params:SendQuoteProps) => {
                 sendQuote:EnumQuote.Enviado
             },
             where:{
-                id:params.registerID
+                id:params.registerServiceID
             }
         })
 

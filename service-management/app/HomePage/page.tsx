@@ -3,7 +3,7 @@
 import { db } from "@/lib/prisma";
 import Header from "../components/Header/header";
 import LastServiceCard from "../components/LastServices/lastService";
-import { Clients, EnumQuote, Quote, Services, Status } from "@prisma/client";
+import { Clients, EnumQuote, Products, Quote, Services, Status } from "@prisma/client";
 import SaveServices from "./components/SaveServices";
 
 interface GetAllServicesProps{
@@ -20,14 +20,11 @@ interface GetAllServicesProps{
   quote: Quote | null
 }
 
-interface QuoteProps{
-  quote:Quote
-}
-
 const HomePage = async () => {
   
   const getServices = await db.services.findMany()
   const getClients = await db.clients.findMany()
+  const getProducts = await db.products.findMany()
 
   const getAllServices = await db.registerService.findMany({
     include:{
@@ -49,6 +46,15 @@ const HomePage = async () => {
       service: service.service
     }
   })
+
+  const showAllProducts = getProducts.map((product:Products, key:number)=>{
+    return {
+      id: product.id,
+      createdAt: product.createdAt,
+      value: product.value,
+      product: product.product
+    }
+  }) as any
   
   const showServices = getAllServices.map((service:GetAllServicesProps, key:number)=>{
 
@@ -64,6 +70,7 @@ const HomePage = async () => {
         registrationDate={service.registrationDate}
         sendQuote={service.sendQuote}
         quote={service.quote}
+        products={showAllProducts}
       />
     )
   })

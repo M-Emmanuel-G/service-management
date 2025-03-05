@@ -44,11 +44,11 @@ const SendQuote = async ({params}:SendQuoteProps) => {
     const finalValueDiscount = finalValue - (finalValue * percentageDiscount ) // Valor final a vista
 
     return ( 
-        <main className="w-screen h-screen flex flex-col items-center justify-center relative">
+        <main className="w-screen h-screen flex flex-col items-center justify-center relative px-8">
         <Header
             pageName="Detalhes do orçamento"
         />
-        <section className="w-full h-[60%] flex flex-col items-center py-4 text-white overflow-auto">
+        <section className="w-full h-[60%] flex flex-col items-center py-4 text-white">
             <h2 className="my-4 text-2xl font-bold">Dados do Orcamento</h2>
             <div className="w-full px-4 text-white my-2 flex justify-between">
                 <strong>Cliente:</strong>
@@ -78,7 +78,7 @@ const SendQuote = async ({params}:SendQuoteProps) => {
         <Separator className=" w-11/12 h-[1px] bg-white rounded-3xl my-2"/>
 
         <section className="w-full h-[30%] p-4 rounded-t-xl text-white">
-            <div>
+            <div className="w-full">
                 <h2 className="text-xl font-bold text-center">Resumo do Orçamento</h2>
             </div>
             <div className="w-full flex justify-between my-2">

@@ -19,6 +19,18 @@ const  UpdateStatusDatabase = async (params:UpdateStatusProps) => {
         
         if(!getRegister) return "O registro do serviço não foi encontrado!"
         
+        if(params.status === Status.Orcamento){
+            await db.registerService.update({
+                data:{
+                    status: Status.Aguardando,
+                },
+                where:{
+                    id:params.id
+                }
+            })
+            revalidatePath("/HomePage")
+            return `Status foi atualizado para ${Status.Aguardando}`
+        }
         if(params.status === Status.Aguardando){
             await db.registerService.update({
                 data:{

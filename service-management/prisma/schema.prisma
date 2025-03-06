@@ -38,7 +38,21 @@ model Services{
   registerService RegisterService[]
 }
 
-model RegisterService{
+enum Status{
+  Orcamento
+  Aguardando
+  Aprovado
+  Iniciado
+  Finalizado
+  Atrasado
+}
+
+enum EnumQuote{
+  Enviado
+  Aguardando
+}
+
+model RegisterService {
   id String @id @default(cuid())
   date String
   registrationDate String
@@ -55,42 +69,45 @@ model RegisterService{
   service Services @relation(fields: [serviceID], references: [id])
 
   quote Quote[]
-  
+  prepareQuote PrepareQuote[] 
 }
 
-enum Status{
-  Orcamento
-  Aguardando
-  Aprovado
-  Iniciado
-  Finalizado
-  Atrasado
-}
-
-enum EnumQuote{
-  Enviado
-  Aguardando
-}
-
-model Quote{
+model Quote {
   id String @id @default(cuid())
-  quantity Int @default(0)
-
+  quantity Int @default(1)
   dateCreated String @default("00/00/0000")
 
-  productID String @default("") @unique
-  product Products @relation(fields:[ productID], references: [id])
+  productID String
+  product Products @relation(fields: [productID], references: [id], onDelete: Cascade)  // Defina Cascade no lado da chave estrangeira
 
-  registerServiceID String @default("")
-  registerService RegisterService @relation(fields: [registerServiceID], references: [id])
+  registerServiceID String
+  registerService RegisterService @relation(fields: [registerServiceID], references: [id], onDelete: Cascade)  // Deleta os Quotes quando RegisterService é excluído
+
+  prepareQuote PrepareQuote[] 
 }
 
-model Products{
-
+model Products {
   id String @id @default(cuid())
   product String
-  value  String
+  value String
   createdAt String @default("00/00/0000")
 
+  // Não precisa definir onDelete aqui, pois isso deve ser feito no modelo Quote
   quote Quote[]
+  prepareQuote PrepareQuote[] 
+}
+
+model PrepareQuote {
+  id String @id @default(cuid())
+
+  quantity Int
+
+  productID String
+  product Products @relation(fields: [productID], references: [id])
+
+  quoteID String
+  quote Quote @relation(fields: [quoteID], references: [id])
+
+  registerServiceID String
+  registerService RegisterService @relation(fields: [registerServiceID], references: [id])
 }

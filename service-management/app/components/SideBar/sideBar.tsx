@@ -37,6 +37,11 @@ import Link from "next/link";
                         className="w-60 h-20 text-xl flex justify-center items-center text-white my-4"
                         > Servicos
                     </Link>
+                    <Link
+                        href="/Products"
+                        className="w-60 h-20 text-xl flex justify-center items-center text-white my-4"
+                        > Produtos
+                    </Link>
                 </SheetDescription>
                 </SheetHeader>
             </SheetContent>

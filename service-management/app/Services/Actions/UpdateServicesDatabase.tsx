@@ -7,7 +7,7 @@ interface UpdateServicesProps{
     service:string,
     description:string,
     id:string,
-    value:number
+    value:string
 }
 
 const UpdateServiceDatabase = async (params:UpdateServicesProps) => {

@@ -26,12 +26,6 @@ interface ServiceCardProps{
     products: Products[]
 }
 
-interface ProductsProps{
-    id:string
-    product:string
-    value: string
-    createdAt: string
-}
 
 const LastServiceCard = (params:ServiceCardProps) => {
 

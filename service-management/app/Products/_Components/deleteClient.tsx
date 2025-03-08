@@ -30,7 +30,7 @@ const DeleteClient = (params:DeleteClientProps) => {
     return ( 
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                <Trash2 width={50} height={50}/>
+                <Trash2 width={30} height={30}/>
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>

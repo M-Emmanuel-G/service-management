@@ -12,13 +12,13 @@ const ProductsPage = async () => {
 
     const showProducts = getProducts.map((product:Products, key:number)=>{
         return(
-                <Card key={product.id} className="w-80 h-20 m-4">
-                    <CardContent className="w-full h-full flex items-center justify-center">
-                        <section className="w-5/6 h-full flex flex-col justify-center gap-y-2 p-0">
+                <div key={product.id} className="w-80 h-20 my-2 p-0 bg-white rounded-xl">
+                    <div className="w-full h-full flex p-0">
+                        <div className="w-5/6 h-full flex flex-col items-center justify-center gap-y-4">
                             <CardTitle>{product.product}</CardTitle>
                             <CardDescription>R${Number(product.value)}</CardDescription>
-                        </section>
-                        <section className="w-1/6 h-full flex flex-col justify-center items-center p-0 mt-4 gap-y-4">
+                        </div>
+                        <div className="w-1/6 h-full flex flex-col items-center justify-center gap-y-4">
                             <UpdateClient
                                 id={product.id}
                                 product={product.product}
@@ -27,9 +27,9 @@ const ProductsPage = async () => {
                             <DeleteClient
                                 id={product.id}
                             />
-                        </section>
-                    </CardContent>
-                </Card>
+                        </div>
+                    </div>
+                </div>
         )
     })
 
@@ -41,7 +41,7 @@ const ProductsPage = async () => {
             <section className="w-full h-[10%] flex items-center justify-center text-white text-xl">
                 <SaveProducts/>
             </section>
-            <section className="w-full h-[80%] flex items-center flex-col px-4 overflow-y-auto">
+            <section className="w-full h-[80%] flex items-center flex-col overflow-y-auto">
                 {showProducts}
             </section>
         </main>

@@ -22,7 +22,7 @@ const UpdateClientDatabase = async (params:Clients) => {
     } 
 
     if(params.typePerson === TypePerson.JURIDICA){
-        if(!params.cnpj) return "Nome do cliente não inserido!"
+        if(!params.cnpj) return "CNPJ do cliente não inserido!"
     }
 
     await db.clients.update({

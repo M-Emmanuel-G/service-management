@@ -12,8 +12,8 @@ import {
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
 import { Input } from "@/components/ui/input";
-import { Clients, TypePerson } from "@prisma/client";
-import { useEffect, useState } from "react";
+import { TypePerson } from "@prisma/client";
+import { useState } from "react";
 import CreateClientDatabase from "./Actions/createClientDatabase";
 
   
@@ -30,7 +30,7 @@ import CreateClientDatabase from "./Actions/createClientDatabase";
             return (
                 <div className="my-2 py-2">
                     <legend>CPF</legend>
-                    <Input value={cpf} onChange={(ev)=>{setCpf(ev.target.value)}}/>
+                    <Input maxLength={11} value={cpf} onChange={(ev)=>{setCpf(ev.target.value)}}/>
                 </div>
             ) 
             
@@ -39,7 +39,7 @@ import CreateClientDatabase from "./Actions/createClientDatabase";
             return(
                 <div className="my-2 py-2">
                     <legend>CNPJ</legend>
-                    <Input value={cnpj} onChange={(ev)=>{setCnpj(ev.target.value)}}/>
+                    <Input maxLength={14} value={cnpj} onChange={(ev)=>{setCnpj(ev.target.value)}}/>
                 </div>
             )
         }

@@ -40,7 +40,7 @@ const UpdateClient = (params:UpdateClientProps) => {
     return ( 
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                <Pencil width={50} height={50}/>
+                <Pencil width={25} height={25}/>
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>

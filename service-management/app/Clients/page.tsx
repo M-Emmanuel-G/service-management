@@ -1,11 +1,11 @@
 import { db } from "@/lib/prisma";
 import Header from "../components/Header/header";
 import { Clients } from "@prisma/client";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Pencil, Trash2 } from "lucide-react";
+import { Card, CardContent, CardDescription, CardTitle } from "@/components/ui/card";
 import CreateClient from "../components/CreateClients/createClient";
 import DeleteClient from "./Components/DeleteClient";
 import UpdateClient from "./Components/UpdateClient";
+import { Separator } from "@/components/ui/separator";
 
 const ClientsPage = async () => {
 
@@ -13,28 +13,31 @@ const ClientsPage = async () => {
 
     const showClients = getClients.map((client:Clients, key:number)=>{
         return(
-            <Card className="w-full h-16 flex items-center justify-between" key={client.id}>
-                <CardContent className=" w-full h-full flex items-center justify-between">
-                    <div className="mt-4">
-                        <strong className="text-xl">{client.nameClient}</strong>
-                    </div>
-                    <div className="flex items-center mt-4">
+            <Card key={client.id} className="w-96 h-32 my-2 p-0 bg-white rounded-xl">
+            <CardContent className="w-full h-full flex p-0">
+                <div className="w-4/6 h-full flex flex-col items-center justify-center gap-y-4">
+                    <CardTitle>{client.nameClient}</CardTitle>
+                    <CardDescription>{client.address}</CardDescription>
+                </div>
+                <Separator className="w-1 rounded-xl h-full bg-black" orientation="vertical"/>
+                <div className="w-2/6 h-full flex flex-col items-center justify-center">
+                    <div className="w-full h-1/2 flex items-center justify-center">
                         <UpdateClient
                             address={client.address}
-                            cnpj={client.cnpj}
-                            cpf={client.cpf}
                             id={client.id}
                             nameClient={client.nameClient}
                             typePerson={client.typePerson}
-
                         />
+                    </div>
+                    <div className="w-full h-1/2 flex items-center justify-center">
                         <DeleteClient
                             id={client.id}
                             nameClient={client.nameClient}
                         />
                     </div>
-                </CardContent>
-            </Card>
+                </div>
+            </CardContent>
+        </Card>
         )
     })
 

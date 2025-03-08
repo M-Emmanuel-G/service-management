@@ -10,7 +10,7 @@ import {
 import GetInfoServices from "../GetInfoServices/getInfoServices";
 import { Clients, EnumQuote, Products, Quote, Status } from "@prisma/client";
 import { useGlobalContext } from "@/app/_Context/GlobalContext";
-import { useEffect, useState } from "react";
+import { useEffect, } from "react";
 
   
 interface ServiceCardProps{

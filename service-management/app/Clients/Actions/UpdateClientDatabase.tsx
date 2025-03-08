@@ -7,11 +7,12 @@ interface UpdateClientProps{
     id:string
     nameClient:string
     address: string
-    cnpj: string
-    cpf:string
+    cnpj?: string
+    cpf?:string
+    typePerson: string
 }
 
-const UpdateClientDatabase = async (params:Clients) => {
+const UpdateClientDatabase = async (params:UpdateClientProps) => {
    try {
 
     if(!params.nameClient) return "Nome do cliente não inserido!"
@@ -22,7 +23,7 @@ const UpdateClientDatabase = async (params:Clients) => {
     } 
 
     if(params.typePerson === TypePerson.JURIDICA){
-        if(!params.cnpj) return "Nome do cliente não inserido!"
+        if(!params.cnpj) return "CNPJ do cliente não inserido!"
     }
 
     await db.clients.update({

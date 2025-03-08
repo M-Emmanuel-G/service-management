@@ -1,5 +1,6 @@
 "use server"
 
+import { GenerateDate } from "@/app/ServicesDatabase/GenerateDate"
 import { db } from "@/lib/prisma"
 import { Status } from "@prisma/client"
 import { revalidatePath } from "next/cache"
@@ -31,6 +32,7 @@ const  UpdateStatusDatabase = async (params:UpdateStatusProps) => {
             revalidatePath("/HomePage")
             return `Status foi atualizado para ${Status.Aguardando}`
         }
+
         if(params.status === Status.Aguardando){
             await db.registerService.update({
                 data:{
@@ -48,6 +50,8 @@ const  UpdateStatusDatabase = async (params:UpdateStatusProps) => {
             await db.registerService.update({
                 data:{
                     status: Status.Iniciado,
+                    deliveryDate:GenerateDate.dateDelivery(),
+                    startDate: GenerateDate.dateStart()
                 },
                 where:{
                     id:params.id

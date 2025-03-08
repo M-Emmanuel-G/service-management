@@ -6,7 +6,6 @@ interface ProductProps {
     id: string;
     product: string;
     value: string;
-    createdAt: string;
   }
 
 

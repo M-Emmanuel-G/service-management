@@ -18,10 +18,11 @@ model Clients{
   id String @id @default(cuid())
   nameClient String
   address String
-  cnpj String @unique
-  cpf String @unique 
+  cnpj String? @unique @db.VarChar(14)
+  cpf String? @unique @db.VarChar(11)
   typePerson TypePerson @default(FISICA) 
   registerService RegisterService[]
+  createdAt DateTime @default(now())
 }
 
  enum TypePerson{
@@ -75,7 +76,7 @@ model RegisterService {
 model Quote {
   id String @id @default(cuid())
   quantity Int @default(1)
-  dateCreated String @default("00/00/0000")
+  createdAt DateTime @default(now())
 
   productID String
   product Products @relation(fields: [productID], references: [id], onDelete: Cascade)  // Defina Cascade no lado da chave estrangeira
@@ -90,7 +91,7 @@ model Products {
   id String @id @default(cuid())
   product String
   value String
-  createdAt String @default("00/00/0000")
+  createdAt DateTime @default(now())
 
   // Não precisa definir onDelete aqui, pois isso deve ser feito no modelo Quote
   quote Quote[]

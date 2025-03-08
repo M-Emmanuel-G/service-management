@@ -7,11 +7,12 @@ interface UpdateClientProps{
     id:string
     nameClient:string
     address: string
-    cnpj: string
-    cpf:string
+    cnpj?: string
+    cpf?:string
+    typePerson: string
 }
 
-const UpdateClientDatabase = async (params:Clients) => {
+const UpdateClientDatabase = async (params:UpdateClientProps) => {
    try {
 
     if(!params.nameClient) return "Nome do cliente não inserido!"

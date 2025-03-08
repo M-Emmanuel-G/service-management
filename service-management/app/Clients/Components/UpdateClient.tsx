@@ -21,8 +21,6 @@ interface UpdateClientProps{
     id:string,
     nameClient:string
     address:string
-    cpf:string
-    cnpj:string
     typePerson:TypePerson
 }
 
@@ -30,37 +28,33 @@ const UpdateClient = (params:UpdateClientProps) => {
 
     const [nameClient, setNameClient] = useState<string>(params.nameClient);
     const [address, setAddress] = useState<string>(params.address);
-    const [cnpj, setCnpj] = useState<string>(params.cnpj);
-    const [cpf, setCpf] = useState<string>(params.cpf);
     const [typePerson, setTypePerson] = useState<string>(params.typePerson);
 
-    const verifyTypePerson = ()=> {
-        if(typePerson === "FISICA"){
-            return (
-                <div className="my-2 py-2">
-                    <legend>CPF</legend>
-                    <Input value={cpf} onChange={(ev)=>{setCpf(ev.target.value)}}/>
-                </div>
-            ) 
+    // const verifyTypePerson = ()=> {
+    //     if(typePerson === "FISICA"){
+    //         return (
+    //             <div className="my-2 py-2">
+    //                 <legend>CPF</legend>
+    //                 <Input value={cpf} onChange={(ev)=>{setCpf(ev.target.value)}}/>
+    //             </div>
+    //         ) 
             
-        }
-        else if(typePerson === "JURIDICA"){
-            return(
-                <div className="my-2 py-2">
-                    <legend>CNPJ</legend>
-                    <Input value={cnpj} onChange={(ev)=>{setCnpj(ev.target.value)}}/>
-                </div>
-            )
-        }
-    }
+    //     }
+    //     else if(typePerson === "JURIDICA"){
+    //         return(
+    //             <div className="my-2 py-2">
+    //                 <legend>CNPJ</legend>
+    //                 <Input value={cnpj} onChange={(ev)=>{setCnpj(ev.target.value)}}/>
+    //             </div>
+    //         )
+    //     }
+    // }
 
     const updateClientDatabase = async()=>{
 
-        const body:Clients = {
+        const body= {
             id:params.id,
             address:params.address,
-            cnpj:params.cnpj,
-            cpf:params.cpf,
             nameClient:params.nameClient,
             typePerson:params.typePerson
         }
@@ -82,10 +76,10 @@ const UpdateClient = (params:UpdateClientProps) => {
                 <section>
                     <form>
                         <div className="w-full flex justify-evenly my-4">
-                            <strong>Pessoa{params.typePerson}</strong>
+                            <strong>Cliente declarado como pessoa: {params.typePerson}</strong>
                         </div>
                         <div>
-                            <legend>Nome do Cliente:</legend>
+                            <legend className="font-bold">Nome do Cliente:</legend>
                             <Input
                             className="my-2"
                                 value={nameClient}
@@ -93,14 +87,13 @@ const UpdateClient = (params:UpdateClientProps) => {
                             />
                         </div>
                         <div>
-                            <legend>Endereço:</legend>
+                            <legend className="font-bold">Endereço:</legend>
                             <Input
                             className="my-2"
                                 value={address}
                                 onChange={(ev=>{setAddress(ev.target.value)})}
                             />
                         </div>
-                        {verifyTypePerson()}
                     </form>
                 </section>
                 <AlertDialogFooter>

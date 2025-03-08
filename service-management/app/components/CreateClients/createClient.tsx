@@ -39,7 +39,7 @@ import CreateClientDatabase from "./Actions/createClientDatabase";
             return(
                 <div className="my-2 py-2">
                     <legend>CNPJ</legend>
-                    <Input maxLength={11} value={cnpj} onChange={(ev)=>{setCnpj(ev.target.value)}}/>
+                    <Input maxLength={14} value={cnpj} onChange={(ev)=>{setCnpj(ev.target.value)}}/>
                 </div>
             )
         }

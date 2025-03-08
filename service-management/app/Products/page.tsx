@@ -5,6 +5,7 @@ import { Products } from "@prisma/client";
 import { Card, CardContent, CardDescription, CardTitle } from "@/components/ui/card";
 import UpdateClient from "./_Components/updateClient";
 import DeleteClient from "./_Components/deleteClient";
+import { Separator } from "@/components/ui/separator";
 
 const ProductsPage = async () => {
 
@@ -12,24 +13,29 @@ const ProductsPage = async () => {
 
     const showProducts = getProducts.map((product:Products, key:number)=>{
         return(
-                <div key={product.id} className="w-80 h-20 my-2 p-0 bg-white rounded-xl">
-                    <div className="w-full h-full flex p-0">
-                        <div className="w-5/6 h-full flex flex-col items-center justify-center gap-y-4">
+                <Card key={product.id} className="w-96 h-32 my-2 p-0 bg-white rounded-xl">
+                    <CardContent className="w-full h-full flex p-0">
+                        <div className="w-4/6 h-full flex flex-col items-center justify-center gap-y-4">
                             <CardTitle>{product.product}</CardTitle>
                             <CardDescription>R${Number(product.value)}</CardDescription>
                         </div>
-                        <div className="w-1/6 h-full flex flex-col items-center justify-center gap-y-4">
-                            <UpdateClient
-                                id={product.id}
-                                product={product.product}
-                                value={Number(product.value)}
-                            />
-                            <DeleteClient
-                                id={product.id}
-                            />
+                        <Separator className="w-1 rounded-xl h-full bg-black" orientation="vertical"/>
+                        <div className="w-2/6 h-full flex flex-col items-center justify-center">
+                            <div className="w-full h-1/2 flex items-center justify-center">
+                                <UpdateClient
+                                    id={product.id}
+                                    product={product.product}
+                                    value={Number(product.value)}
+                                />
+                            </div>
+                            <div className="w-full h-1/2 flex items-center justify-center">
+                                <DeleteClient
+                                    id={product.id}
+                                />
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </CardContent>
+                </Card>
         )
     })
 

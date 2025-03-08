@@ -48,10 +48,17 @@ const GetInfoServices = (params:getInfoServicesProps) => {
 
     useEffect(()=>{
         const compare = GenerateDate.dateDelay(params.deliveryDate)
-        
-            if(params.deliveryDate === "Indisponivel!") setColor({color:"text-yellow-400", response:"Aguardando..."})
-            else if(compare === false ) setColor({color:"text-green-400", response:"Dentro do prazo"})
-            else if(compare === true ) setColor({color:"text-red-400", response:"Em atraso"})
+            try {
+                if(params.status === Status.Orcamento) setColor({color:"text-black", response:"Aguardando envio do orçamento..."})
+                else if(params.status === Status.Aguardando) setColor({color:"text-black", response:"Aguardando aprovação orçamento..."})
+                else if(params.status === Status.Aprovado) setColor({color:"text-black", response:"Orçamento foi aprovado"})
+                // else if(params.deliveryDate === "Indisponivel!") setColor({color:"text-yellow-400", response:"Aguardando..."})
+                else if(compare === false ) setColor({color:"text-green-400", response:"Dentro do prazo"})
+                else if(compare === true ) setColor({color:"text-red-400", response:"Em atraso"})
+
+            } catch (error:any) {
+                
+            }
     },[])
 
     return ( 

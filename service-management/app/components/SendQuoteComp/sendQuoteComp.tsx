@@ -1,4 +1,5 @@
-import SendQuoteDatabase from "@/app/Actions/SendQuoteDatabase"
+import CreateBudget from "@/app/Actions/CreatedBudget"
+import PrepareQuoteDatabase from "@/app/Actions/PrepareQuoteDatabase"
 import {
     AlertDialog,
     AlertDialogAction,
@@ -10,7 +11,9 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { db } from "@/lib/prisma"
 import { EnumQuote, Products } from "@prisma/client"
 import { useState } from "react"
   
@@ -30,16 +33,32 @@ const SendQuoteComponent = (params:SendQuoteProps) => {
     const [quantity, setQuantity] = useState<number>(params.quantity)
     const [products, setProducts] = useState(params.products)
     
+    const createBudgetDatabase = async()=>{
+      const body = {
+        registerServiceID: params.id,
+      }
+
+      const response = await CreateBudget(body)
+      alert(response)
+    }
 
     const sendQuoteDatabase = async ()=>{
+
+      const getBudget = await db.quote.findUnique({
+        where:{
+          registerServiceID: params.id
+        }
+      })
       
       const body = {
         registerServiceID: params.id,
         quantity:params.quantity,
-        productID:params.productID
+        productID:params.productID,
+        productValue: 0,
+        quoteID:getBudget?.id as string
       }
 
-      const result = await SendQuoteDatabase(body)
+      const result = await PrepareQuoteDatabase(body)
       alert(result)
     }
 
@@ -56,12 +75,13 @@ const SendQuoteComponent = (params:SendQuoteProps) => {
                 <AlertDialogHeader>
                 <AlertDialogTitle className="text-2xl text-center my-2 font-bold">Enviar Orçamento</AlertDialogTitle>
                 <AlertDialogDescription className="flex  text-white">
-                
-                    <strong className="mx-2 text-xl">Cliente:</strong>
-                    <strong className="text-xl">{params.client}</strong>
-
+                  <Button onClick={createBudgetDatabase}>Criar Orcamento</Button>
                 </AlertDialogDescription>
                 </AlertDialogHeader>
+                <section>
+                  <strong className="mx-2 text-xl">Cliente:</strong>
+                  <strong className="text-xl">{params.client}</strong>
+                </section>
                   <form>
                     <div className="flex justify-between items-center my-3">
                       <strong>Item 01:</strong>

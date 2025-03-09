@@ -42,17 +42,19 @@ const SaveServices = (params:SaveServiceProps) => {
 
     const showClients = params.client.map((client:Clients, key:number)=>{
         return (
-            <option key={client.id} onClick={()=>{setClientID(client.id)}} className="w-80 h-10">{client.nameClient}</option>
+            <option key={client.id} value={client.id} className="w-80 h-10">{client.nameClient}</option>
         )
     })
 
     const showServices = params.services.map((service:ServicesProps, key:number)=>{
         return (
-            <option key={service.id}  onClick={()=>{setServiceID(service.id)}} className="w-80 h-10">{service.service}</option>
+            <option key={service.id} value={service.id} className="w-80 h-10">{service.service}</option>
         )
     })
 
+    console.log(params.client);
     const saveServicesDatabase = async ()=>{
+        
         const response = await SaveServicesDatabase(
             {
                 clientID,
@@ -75,13 +77,13 @@ const SaveServices = (params:SaveServiceProps) => {
             </AlertDialogHeader>
                 <div className="w-full flex flex-col my-4 ">
                     <legend className="font-bold">Clientes:</legend>
-                    <select className="w-80 text-center ">
+                    <select onChange={(ev)=>{setClientID(ev.target.value)}} className="w-80 text-center ">
                         {showClients}
                     </select>
                 </div>
                 <div className="w-full flex flex-col my-4">
                     <legend className="font-bold">Serviços:</legend>
-                    <select className="w-80 text-center">
+                    <select onChange={(ev)=>{setServiceID(ev.target.value)}} className="w-80 text-center">
                         {showServices}
                     </select>
                </div>
@@ -89,6 +91,7 @@ const SaveServices = (params:SaveServiceProps) => {
                     <legend className="font-bold">Descrição:</legend>
                     <Input value={description} onChange={(ev)=>{setDescription(ev.target.value)}}/>
                </div>
+               <button onClick={()=>{alert("dbshchdfj")}}>chamar</button>
             <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={saveServicesDatabase} >Continue</AlertDialogAction>

@@ -46,20 +46,20 @@ const GetInfoServices = (params:getInfoServicesProps) => {
         response:""
     })
 
-    useEffect(()=>{
-        const compare = GenerateDate.dateDelay(params.deliveryDate)
-            try {
-                if(params.status === Status.Orcamento) setColor({color:"text-black", response:"Aguardando envio do orçamento..."})
-                else if(params.status === Status.Aguardando) setColor({color:"text-black", response:"Aguardando aprovação orçamento..."})
-                else if(params.status === Status.Aprovado) setColor({color:"text-black", response:"Orçamento foi aprovado"})
-                // else if(params.deliveryDate === "Indisponivel!") setColor({color:"text-yellow-400", response:"Aguardando..."})
-                else if(compare === false ) setColor({color:"text-green-400", response:"Dentro do prazo"})
-                else if(compare === true ) setColor({color:"text-red-400", response:"Em atraso"})
+    // useEffect(()=>{
+    //     const compare = GenerateDate.dateDelay(params.deliveryDate)
+    //         try {
+    //             if(params.status === Status.Orcamento) setColor({color:"text-black", response:"Aguardando envio do orçamento..."})
+    //             else if(params.status === Status.Aguardando) setColor({color:"text-black", response:"Aguardando aprovação orçamento..."})
+    //             else if(params.status === Status.Aprovado) setColor({color:"text-black", response:"Orçamento foi aprovado"})
+    //             // else if(params.deliveryDate === "Indisponivel!") setColor({color:"text-yellow-400", response:"Aguardando..."})
+    //             else if(compare === false ) setColor({color:"text-green-400", response:"Dentro do prazo"})
+    //             else if(compare === true ) setColor({color:"text-red-400", response:"Em atraso"})
 
-            } catch (error:any) {
+    //         } catch (error:any) {
                 
-            }
-    },[])
+    //         }
+    // },[])
 
     return ( 
         <Dialog>
@@ -110,20 +110,21 @@ const GetInfoServices = (params:getInfoServicesProps) => {
                     <Separator className=" w-11/12 h-[1px] bg-black rounded-3xl my-2"/>
                 </div>
                 <div className="w-full flex justify-center flex-col items-center">
-                    {
+                    {/* {
                         params.sendQuote === EnumQuote.Aguardando? 
                             <SendQuoteComponent
                                 id={params.id}
                                 client={params.client?.nameClient}
                                 service=""
                                 sendQuote={params.sendQuote}
-                                productID={params.products[0].id} 
+                                productID={params.products[0]?.id} 
                                 quantity={0}
                                 products={params.products}
+                                quote={params.quote}
                             />
                         :
-                        <Link className="font-bold" href={`/${params.id}`}>Ver Orçamento</Link>
-                    }
+                    } */}
+                    <Link className="font-bold" href={`RegisterService/${params.id}`}>Criar Orçamento</Link>
                     <UpdateStatus
                         id={params.id}
                         status={params.status}

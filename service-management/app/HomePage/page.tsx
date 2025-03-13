@@ -5,6 +5,7 @@ import Header from "../components/Header/header";
 import LastServiceCard from "../components/LastServices/lastService";
 import { Clients, EnumQuote, Products, Quote, Services, Status } from "@prisma/client";
 import SaveServices from "./components/SaveServices";
+import CreateBudget from "./components/createBudget";
 
 interface GetAllServicesProps{
   id: string 
@@ -29,7 +30,6 @@ const HomePage = async () => {
   const getAllServices = await db.registerService.findMany({
     include:{
       client:true,
-      quote:true
     }
   }) as any
 
@@ -55,6 +55,8 @@ const HomePage = async () => {
       product: product.product
     }
   }) as any
+
+  
   
   const showServices = getAllServices.map((service:GetAllServicesProps, key:number)=>{
 
@@ -69,7 +71,7 @@ const HomePage = async () => {
         deliveryDate={service.deliveryDate}
         registrationDate={service.registrationDate}
         sendQuote={service.sendQuote}
-        quote={service.quote}
+        quote={service.quote} 
         products={showAllProducts}
       />
     )
@@ -84,6 +86,10 @@ const HomePage = async () => {
           <SaveServices
             client={showAllClients}
             services={showAllServices}
+          />
+          <CreateBudget
+            clients={showAllClients}
+            products={showAllProducts}
           />
         </section>
           <section className="w-full h-[80%] flex flex-col px-4 overflow-y-auto">

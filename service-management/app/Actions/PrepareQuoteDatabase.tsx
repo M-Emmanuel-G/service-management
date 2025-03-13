@@ -13,13 +13,14 @@ interface PrepareQuoteProps{
 
 const PrepareQuoteDatabase = async (params:PrepareQuoteProps) => {
  try {
+    
     await db.prepareQuote.create({
         data:{
             quantity:params.quantity,
             subTotal:(params.quantity * params.productValue),
             quoteID:params.quoteID,
             productID: params.productID,
-            registerServiceID: params.registerServiceID
+            registerServiceID: params.registerServiceID,
         }
     })
     revalidatePath("/HomePage")

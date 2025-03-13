@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { db } from "@/lib/prisma"
-import { EnumQuote, Products } from "@prisma/client"
+import { EnumQuote, Products, Quote } from "@prisma/client"
 import { useState } from "react"
   
   interface SendQuoteProps{
@@ -25,6 +25,7 @@ import { useState } from "react"
     quantity:number
     productID:string
     products: Products[]
+    quote: Quote | null
   }
 
 const SendQuoteComponent = (params:SendQuoteProps) => {
@@ -43,23 +44,18 @@ const SendQuoteComponent = (params:SendQuoteProps) => {
     }
 
     const sendQuoteDatabase = async ()=>{
-
-      const getBudget = await db.quote.findUnique({
-        where:{
-          registerServiceID: params.id
-        }
-      })
-      
       const body = {
         registerServiceID: params.id,
-        quantity:params.quantity,
+        quantity:0,
         productID:params.productID,
-        productValue: 0,
-        quoteID:getBudget?.id as string
+        productValue:0,
+        quoteID: "cm811d9ci0001ux1g27phzes7",
       }
 
-      const result = await PrepareQuoteDatabase(body)
-      alert(result)
+
+      // const result = await PrepareQuoteDatabase(body)
+      // alert(result);
+      
     }
 
       const showProducts = products.map((product:Products, key:number)=>{

@@ -1,5 +1,6 @@
 "use client"
 
+import { TypePerson } from "@prisma/client";
 import { createContext, useContext, useState, ReactNode } from "react";
 
 interface ProductProps {
@@ -7,8 +8,6 @@ interface ProductProps {
     product: string;
     value: string;
   }
-
-
 interface GlobalContextType {
   products: ProductProps [] | null;
   setProducts: ( products:ProductProps[] | null) => void;
@@ -20,6 +19,7 @@ const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
 // 3️⃣ Criando um Provider
 export const GlobalProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<ProductProps[] | null>(null);
+  const [clients, setClients] = useState<ProductProps[] | null>(null);
 
   return (
     <GlobalContext.Provider value={{ products, setProducts }}>

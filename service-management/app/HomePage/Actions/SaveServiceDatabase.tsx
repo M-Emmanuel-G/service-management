@@ -31,7 +31,7 @@ const SaveServicesDatabase = async (params:SaveServiceProps) => {
         if(!getClient) return "Cliente não encontrado!"
         if(!getService) return "Servico não encontrado!"
 
-        await db.registerService.create({
+        const registerService = await db.registerService.create({
             data:{
                 date: GenerateDate.dateNow(),
                 registrationDate: GenerateDate.dateNow(),
@@ -44,8 +44,15 @@ const SaveServicesDatabase = async (params:SaveServiceProps) => {
             }
         })
 
+        await db.quote.create({
+            data:{
+                clientID:params.clientID
+
+            }
+        })
+
         revalidatePath("/HomePage")
-        return "Ordem de serviço foi criado com sucesso!"
+        return "Ordem de serviço foi criada!"
         
     } catch (error:any) {
         return error.message

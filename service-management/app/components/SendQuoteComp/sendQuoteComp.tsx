@@ -1,4 +1,5 @@
-import SendQuoteDatabase from "@/app/Actions/SendQuoteDatabase"
+import CreateBudget from "@/app/Actions/CreatedBudget"
+import PrepareQuoteDatabase from "@/app/Actions/PrepareQuoteDatabase"
 import {
     AlertDialog,
     AlertDialogAction,
@@ -10,8 +11,10 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { EnumQuote, Products } from "@prisma/client"
+import { db } from "@/lib/prisma"
+import { EnumQuote, Products, Quote } from "@prisma/client"
 import { useState } from "react"
   
   interface SendQuoteProps{
@@ -22,6 +25,7 @@ import { useState } from "react"
     quantity:number
     productID:string
     products: Products[]
+    quote: Quote | null
   }
 
 const SendQuoteComponent = (params:SendQuoteProps) => {
@@ -30,17 +34,28 @@ const SendQuoteComponent = (params:SendQuoteProps) => {
     const [quantity, setQuantity] = useState<number>(params.quantity)
     const [products, setProducts] = useState(params.products)
     
-
-    const sendQuoteDatabase = async ()=>{
-      
+    const createBudgetDatabase = async()=>{
       const body = {
         registerServiceID: params.id,
-        quantity:params.quantity,
-        productID:params.productID
       }
 
-      const result = await SendQuoteDatabase(body)
-      alert(result)
+      const response = await CreateBudget(body)
+      alert(response)
+    }
+
+    const sendQuoteDatabase = async ()=>{
+      const body = {
+        registerServiceID: params.id,
+        quantity:0,
+        productID:params.productID,
+        productValue:0,
+        quoteID: "cm811d9ci0001ux1g27phzes7",
+      }
+
+
+      // const result = await PrepareQuoteDatabase(body)
+      // alert(result);
+      
     }
 
       const showProducts = products.map((product:Products, key:number)=>{
@@ -56,12 +71,13 @@ const SendQuoteComponent = (params:SendQuoteProps) => {
                 <AlertDialogHeader>
                 <AlertDialogTitle className="text-2xl text-center my-2 font-bold">Enviar Orçamento</AlertDialogTitle>
                 <AlertDialogDescription className="flex  text-white">
-                
-                    <strong className="mx-2 text-xl">Cliente:</strong>
-                    <strong className="text-xl">{params.client}</strong>
-
+                  <Button onClick={createBudgetDatabase}>Criar Orcamento</Button>
                 </AlertDialogDescription>
                 </AlertDialogHeader>
+                <section>
+                  <strong className="mx-2 text-xl">Cliente:</strong>
+                  <strong className="text-xl">{params.client}</strong>
+                </section>
                   <form>
                     <div className="flex justify-between items-center my-3">
                       <strong>Item 01:</strong>

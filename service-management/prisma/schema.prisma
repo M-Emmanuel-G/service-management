@@ -23,6 +23,8 @@ model Clients{
   typePerson TypePerson @default(FISICA) 
   registerService RegisterService[]
   createdAt DateTime @default(now())
+
+  quote Quote[]
 }
 
  enum TypePerson{
@@ -34,7 +36,7 @@ model Services{
   id String @id @default(cuid())
   service String
   description String
-  value String
+  value Int
 
   registerService RegisterService[]
 }
@@ -69,46 +71,36 @@ model RegisterService {
   serviceID String
   service Services @relation(fields: [serviceID], references: [id])
 
-  quote Quote[]
-  prepareQuote PrepareQuote[] 
 }
 
 model Quote {
   id String @id @default(cuid())
-  quantity Int @default(1)
   createdAt DateTime @default(now())
-
-  productID String
-  product Products @relation(fields: [productID], references: [id], onDelete: Cascade)  // Defina Cascade no lado da chave estrangeira
-
-  registerServiceID String
-  registerService RegisterService @relation(fields: [registerServiceID], references: [id], onDelete: Cascade)  // Deleta os Quotes quando RegisterService é excluído
-
-  prepareQuote PrepareQuote[] 
+  
+  clientID String
+  client Clients @relation(fields: [clientID], references: [id], onDelete: Cascade)
+  prepareQuote PrepareQuote[]
 }
+
 
 model Products {
   id String @id @default(cuid())
   product String
   value String
   createdAt DateTime @default(now())
-
-  // Não precisa definir onDelete aqui, pois isso deve ser feito no modelo Quote
-  quote Quote[]
-  prepareQuote PrepareQuote[] 
+  prepareQuote PrepareQuote[]
 }
 
 model PrepareQuote {
   id String @id @default(cuid())
-
   quantity Int
+  subTotal Decimal @db.Decimal(10,2)
 
   productID String
-  product Products @relation(fields: [productID], references: [id])
+  product Products @relation(fields: [productID], references: [id], onDelete: Cascade)
 
   quoteID String
-  quote Quote @relation(fields: [quoteID], references: [id])
+  quote Quote @relation(fields: [quoteID], references: [id], onDelete: Cascade)
 
-  registerServiceID String
-  registerService RegisterService @relation(fields: [registerServiceID], references: [id])
 }
+

@@ -7,19 +7,24 @@ interface PrepareQuoteProps{
     quantity:number
     productID: string
     quoteID: string
+    registerServiceID: string
+    productValue: number
 }
 
 const PrepareQuoteDatabase = async (params:PrepareQuoteProps) => {
  try {
+    
     await db.prepareQuote.create({
         data:{
             quantity:params.quantity,
+            subTotal:(params.quantity * params.productValue),
+            quoteID:params.quoteID,
             productID: params.productID,
-            quoteID: params.quoteID,
-
+            registerServiceID: params.registerServiceID,
         }
     })
     revalidatePath("/HomePage")
+    return "Produto adicionado!"
  } catch (error:any) {
     return error.message
  }

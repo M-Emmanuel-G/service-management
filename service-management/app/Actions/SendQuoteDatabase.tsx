@@ -27,9 +27,7 @@ const SendQuoteDatabase = async (params:SendQuoteProps) => {
 
         await db.quote.create({
             data:{
-                quantity:params.quantity,
-                productID: params.productID,
-                registerServiceID: params.registerServiceID
+                clientID:""
             }
         })
 

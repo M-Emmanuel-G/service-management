@@ -8,7 +8,7 @@ import {
     CardTitle,
   } from "@/components/ui/card"
 import GetInfoServices from "../GetInfoServices/getInfoServices";
-import { Clients, EnumQuote, Products, Quote, Status } from "@prisma/client";
+import { Clients, EnumQuote, PrepareQuote, Products, Quote, Status } from "@prisma/client";
 import { useGlobalContext } from "@/app/_Context/GlobalContext";
 import { useEffect, } from "react";
 
@@ -37,6 +37,7 @@ const LastServiceCard = (params:ServiceCardProps) => {
         }
         
     },[])
+
     return ( 
         <Card className=" w-full bg-stone-300 flex justify-between items-center my-4">
             <CardHeader className="w-5/6">

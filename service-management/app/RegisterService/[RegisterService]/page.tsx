@@ -89,7 +89,7 @@ const RegisterService = async ({params}:RegisterServiceProps) => {
                     <strong>Produto</strong>
                     <strong>valor unit</strong>
                     <strong>subTotal</strong>
-                </div>
+                </div> 
                 <div className="w-full flex justify-center">
                     <Separator orientation="horizontal" className="w-80 w- h-1 bg-black my-4 "/>     
                 </div>
